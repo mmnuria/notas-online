@@ -8,13 +8,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.servlet.ServletConfig;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class Log2 extends HTTPServlet {
+public class AccessLog implements Filter {
 
     private static final String LOG_FILE_PATH_PARAM = "log-file-path";
     private static final String DEFAULT_LOG_FILE_PATH = "/var/log/notas-online/access.log";
@@ -22,11 +24,11 @@ public class Log2 extends HTTPServlet {
     private PrintWriter logWriter;
     private String logFilePath;
 
-    public void init(ServletConfig servletConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) throws ServletException {
         // Initialization code goes here
 
         // Get log file path from web.xml configuration
-        logFilePath = servletConfig.getInitParameter(LOG_FILE_PATH_PARAM);
+        logFilePath = filterConfig.getInitParameter(LOG_FILE_PATH_PARAM);
         if (logFilePath == null || logFilePath.trim().isEmpty()) {
             logFilePath = DEFAULT_LOG_FILE_PATH;
         }
@@ -39,22 +41,26 @@ public class Log2 extends HTTPServlet {
         }
     }
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         // Get relevant information
-        String formData = request.getQueryString();
-        String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
+        String formData = httpRequest.getQueryString();
+        String clientInfo = httpRequest.getRemoteUser() + " " + httpRequest.getRemoteAddr();
         String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String pathInfo = request.getPathInfo();
-        // String uri = request.getRequestURI();
-        String method = request.getMethod();
+        String pathInfo = httpRequest.getPathInfo();
+        // String uri = httpRequest.getRequestURI();
+        String method = httpRequest.getMethod();
 
         // Log the entry
         String logEntry = currentDate + " " + clientInfo + " " + pathInfo + " " + method;
         System.out.println(logEntry);
         logWriter.println(logEntry);
         logWriter.flush();
+
+        chain.doFilter(request, response);
     }
 
     public void destroy() {

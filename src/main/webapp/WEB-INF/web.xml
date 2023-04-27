@@ -12,32 +12,46 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  <filter>
-    <filter-name>Log0</filter-name> <!-- mandatory -->
-    <filter-class>filters.Log0</filter-class> <!-- mandatory -->
-  </filter>
-  <filter-mapping>
-    <filter-name>Log0</filter-name> <!-- mandatory -->
+  <!-- Principio Hito 1 -->
+  <servlet>
+    <servlet-name>Log0</servlet-name> <!-- mandatory -->
+    <servlet-class>filters.Log0</servlet-class> <!-- mandatory -->
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Log0</servlet-name> <!-- mandatory -->
     <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
-  </filter-mapping>
-  <filter>
-    <filter-name>Log1</filter-name> <!-- mandatory -->
-    <filter-class>filters.Log1</filter-class> <!-- mandatory -->
-  </filter>
-  <filter-mapping>
-    <filter-name>Log1</filter-name> <!-- mandatory -->
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Log1</servlet-name> <!-- mandatory -->
+    <servlet-class>filters.Log1</servlet-class> <!-- mandatory -->
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Log1</servlet-name> <!-- mandatory -->
     <url-pattern>/*</url-pattern> <!-- either url-pattern or servlet-name is mandatory -->
-  </filter-mapping>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>Log2</servlet-name> <!-- mandatory -->
+    <servlet-class>filters.Log2</servlet-class> <!-- mandatory -->
+    <init-param>
+      <param-name>log-file-path</param-name>
+      <param-value>/var/log/notas-online/access.log</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Log2</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+  <!-- Fin Hito 1 -->
   <filter>
-    <filter-name>Log2</filter-name> <!-- mandatory -->
-    <filter-class>filters.Log2</filter-class> <!-- mandatory -->
+    <filter-name>AccessLog</filter-name> <!-- mandatory -->
+    <filter-class>filters.AccessLog</filter-class> <!-- mandatory -->
     <init-param>
       <param-name>log-file-path</param-name>
       <param-value>/var/log/notas-online/access.log</param-value>
     </init-param>
   </filter>
   <filter-mapping>
-    <filter-name>Log2</filter-name>
+    <filter-name>AccessLog</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   <servlet>

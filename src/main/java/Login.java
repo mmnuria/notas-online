@@ -3,8 +3,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,11 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class Login extends HttpServlet {
+import config.DatabaseConfig;
 
-    // what path to put here ?
-    // TODO: make it a global variable
-    private static final String CENTRO_EDUCATIVO_URL = "http://dew-bpopa-2223.dsicv.upv.es:9090/CentroEducativo";
+public class Login extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -27,26 +23,20 @@ public class Login extends HttpServlet {
         String dni = request.getParameter("dni");
         String password = request.getParameter("password");
 
-        // Create a JSON payload with the dni and password
-        String payload = String.format("{\"dni\": \"%s\", \"password\": \"%s\"}", dni, password);
+        // Construct the curl command to make an HTTP POST request with two string
+        // parameters
+        String endpoint = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/login";
+        String command = "curl -X POST -d \"dni=" + dni + "&password=" + password + "\" " + endpoint;
 
-        // Create an HTTP connection to the CentroEducativo API
-        URL url = new URL(CENTRO_EDUCATIVO_URL + "/login");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setDoOutput(true);
+        // Execute the curl command and capture the output and status code
+        Process process = Runtime.getRuntime().exec(command);
+        int statusCode = process.waitFor();
 
-        // Write the JSON payload to the connection output stream
-        connection.getOutputStream().write(payload.getBytes());
-
-        // Read the response from the CentroEducativo API
-        int statusCode = connection.getResponseCode();
-        if (statusCode == HttpURLConnection.HTTP_OK) {
+        if (statusCode == HttpServletResponse.SC_OK) {
             // Login was successful
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String key = in.readLine();
-            in.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String key = reader.readLine();
+            reader.close();
             Cookie cookie = new Cookie("JSESSIONID", key);
             response.addCookie(cookie);
             HttpSession session = request.getSession();
@@ -59,13 +49,9 @@ public class Login extends HttpServlet {
             // Login failed
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
-            PrintWriter out = response.getWriter();
-            out.println("<font color=red>Invalid DNI or password</font>");
+            response.getWriter().println("<font color=red>Invalid DNI or password</font>");
             rd.include(request, response);
         }
-
-        // Close the connection
-        connection.disconnect();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

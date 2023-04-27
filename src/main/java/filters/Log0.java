@@ -3,39 +3,30 @@ package filters;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-public class Log0 implements Filter {
+public class Log0 extends HTTPServlet {
 
-    public void init(FilterConfig filterConfig) throws ServletException {
-        // Initialization code goes here
-    }
-
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         // Get relevant information
-        String formData = httpRequest.getQueryString();
-        String clientInfo = httpRequest.getRemoteUser() + " " + httpRequest.getRemoteAddr();
+        String formData = request.getQueryString();
+        String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
         String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String uri = httpRequest.getRequestURI();
-        String method = httpRequest.getMethod();
+        String pathInfo = request.getPathInfo();
+        // String uri = request.getRequestURI();
+        String method = request.getMethod();
 
         // Log the entry
-        System.out.println(currentDate + " " + clientInfo + " " + method + " " + uri + " " + formData);
-
-        chain.doFilter(request, response);
+        System.out.println(currentDate + " " + clientInfo + " " + pathInfo + " " + method);
     }
 
-    public void destroy() {
-        // Cleanup code goes here
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }
