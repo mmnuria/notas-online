@@ -3,9 +3,6 @@ package filters;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.servlet.Filter;
@@ -14,8 +11,10 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 
+@WebServlet("/AccessLog")
 public class AccessLog implements Filter {
 
     private static final String LOG_FILE_PATH_PARAM = "log-file-path";
