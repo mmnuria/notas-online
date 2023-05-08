@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class Log2 extends HTTPServlet {
+public class Log2 extends HttpServlet {
 
     private static final String LOG_FILE_PATH_PARAM = "log-file-path";
     private static final String DEFAULT_LOG_FILE_PATH = "/var/log/notas-online/access.log";

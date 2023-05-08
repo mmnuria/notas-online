@@ -30,7 +30,13 @@ public class Login extends HttpServlet {
 
         // Execute the curl command and capture the output and status code
         Process process = Runtime.getRuntime().exec(command);
-        int statusCode = process.waitFor();
+        int statusCode = 0;
+		try {
+			statusCode = process.waitFor();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         if (statusCode == HttpServletResponse.SC_OK) {
             // Login was successful
