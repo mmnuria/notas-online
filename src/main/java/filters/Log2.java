@@ -10,10 +10,15 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet implementation class Log2
+ */
+@WebServlet("/Log2")
 public class Log2 extends HttpServlet {
 
     private static final String LOG_FILE_PATH_PARAM = "log-file-path";
