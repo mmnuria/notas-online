@@ -6,10 +6,15 @@ import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Servlet implementation class Log1
+ */
+@WebServlet("/Log1")
 public class Log1 extends HttpServlet {
 
     private static final String DEFAULT_LOG_FILE_PATH = "/var/log/notas-online/access.log";
