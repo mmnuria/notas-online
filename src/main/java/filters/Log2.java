@@ -1,6 +1,7 @@
 package filters;
 
 import java.io.FileWriter;
+import helpers.FileSystem;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import helpers.FileSystem;
+
 /**
  * Servlet implementation class Log2
  */
@@ -22,25 +25,31 @@ import javax.servlet.http.HttpServletResponse;
 public class Log2 extends HttpServlet {
 
     private static final String LOG_FILE_PATH_PARAM = "log-file-path";
-    private static final String DEFAULT_LOG_FILE_PATH = "/var/log/notas-online/access.log";
 
     private PrintWriter logWriter;
     private String logFilePath;
+    private FileSystem fileSystem = new FileSystem();
 
     public void init(ServletConfig servletConfig) throws ServletException {
         // Initialization code goes here
 
         // Get log file path from web.xml configuration
-        logFilePath = servletConfig.getInitParameter(LOG_FILE_PATH_PARAM);
-        if (logFilePath == null || logFilePath.trim().isEmpty()) {
-            logFilePath = DEFAULT_LOG_FILE_PATH;
-        }
-
+        logFilePath = servletConfig.getServletContext().getInitParameter(LOG_FILE_PATH_PARAM);
+        Path path = Paths.get(logFilePath);
+        String routeDirectory = path.getParent().toString();
+        String nameFile = path.getFileName().toString();
+        
         // Open log file for writing
         try {
+        	if(!fileSystem.exists(routeDirectory)) {
+        		fileSystem.createDirectory(routeDirectory);
+        	}
+        	fileSystem.createFile(routeDirectory, nameFile);
             logWriter = new PrintWriter(new FileWriter(logFilePath, true));
         } catch (IOException e) {
             throw new ServletException("Error opening log file", e);
+        } catch(Exception e) {
+        	throw new ServletException("Error creating directory", e);
         }
     }
 
@@ -51,12 +60,12 @@ public class Log2 extends HttpServlet {
         String formData = request.getQueryString();
         String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
         String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String pathInfo = request.getPathInfo();
-        // String uri = request.getRequestURI();
+        String servletName = request.getServletPath();
+        String uri = request.getRequestURI();
         String method = request.getMethod();
 
         // Log the entry
-        String logEntry = currentDate + " " + clientInfo + " " + pathInfo + " " + method;
+        String logEntry = currentDate + " " + clientInfo + " " + servletName + " " + method;
         System.out.println(logEntry);
         logWriter.println(logEntry);
         logWriter.flush();

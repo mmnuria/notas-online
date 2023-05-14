@@ -22,12 +22,12 @@ public class Log0 extends HttpServlet {
         String formData = request.getQueryString();
         String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
         String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String pathInfo = request.getPathInfo();
-        // String uri = request.getRequestURI();
+        String servletName = request.getServletPath();
+        String uri = request.getRequestURI();
         String method = request.getMethod();
 
         // Log the entry
-        System.out.println(currentDate + " " + clientInfo + " " + pathInfo + " " + method);
+        System.out.println(currentDate + " " + clientInfo + " " + servletName + " " + method);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
