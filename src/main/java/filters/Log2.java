@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import helpers.FileSystem;
-
 /**
  * Servlet implementation class Log2
  */
@@ -41,7 +39,7 @@ public class Log2 extends HttpServlet {
         
         // Open log file for writing
         try {
-        	if(!fileSystem.exists(routeDirectory)) {
+        	if (!fileSystem.exists(routeDirectory)) {
         		fileSystem.createDirectory(routeDirectory);
         	}
         	fileSystem.createFile(routeDirectory, nameFile);
