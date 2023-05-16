@@ -3,6 +3,7 @@ package filter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletException;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,10 +24,10 @@ public class AuthenticationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) request;
-        HttpServletResponse response = (HttpServletResponse) response;
-        ServletContext context = request.getServletContext();
-        HttpSession session = request.getSession();
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        ServletContext context = httpRequest.getServletContext();
+        HttpSession session = httpRequest.getSession();
         RequestDispatcher dispatcher = null;
 
         HashMap<String, User> usersMap;
@@ -48,38 +49,42 @@ public class AuthenticationFilter implements Filter {
             usersMap = (HashMap<String, User>) context.getAttribute("users");
         }
 
-        if (session.getAttribute("key").equals(null)) {
-            String login = request.getRemoteUser();
+        if (session.getAttribute("key") == null) {
+            String login = httpRequest.getRemoteUser();
+            System.out.println(login);
 
-            if (!login.equals(null)) {
+            if (login != null) {
                 session.setAttribute("dni", usersMap.get(login).getDni());
                 session.setAttribute("password", usersMap.get(login).getPassword());
-                request.setAttribute("dni", usersMap.get(login).getDni());
-                request.setAttribute("password", usersMap.get(login).getPassword());
+                httpRequest.setAttribute("dni", usersMap.get(login).getDni());
+                httpRequest.setAttribute("password", usersMap.get(login).getPassword());
+                
                 // Send dni and password to LoginServlet
-                dispatcher = request.getRequestDispatcher("/login");
-                dispatcher.forward(request, response);
+                dispatcher = httpRequest.getRequestDispatcher("/login");
+                dispatcher.forward(httpRequest, httpResponse);
 
                 // Get key from LoginServlet
-                String key = (String) request.getAttribute("key");
-                if (!key.equals(null)) {
+                String key = (String) httpRequest.getAttribute("key");
+                if (key != null) {
                     session.setAttribute("key", key);
                     Cookie cookie = new Cookie("JSESSIONID", key);
                     // Set max age of cookie to 30 mins
                     cookie.setMaxAge(30 * 60);
-                    response.addCookie(cookie);
+                    httpResponse.addCookie(cookie);
                 } else {
-                    error(response, "User not found in database");
+                    error(httpResponse, "User not found in database");
                 }
             } else {
-                error(response, "User not in tomcat-users.xml");
+            	System.out.print(httpRequest.getRemoteUser());
+                error(httpResponse, "User not in tomcat-users.xml");
             }
         }
-
-        String requestedPage = request.getRequestURI();
+        
+        String requestedPage = httpRequest.getRequestURI();
+        System.out.println(requestedPage);
         if (requestedPage.endsWith("/login.html")) {
             // Redirect the user to the home page if he's already logged in
-            response.sendRedirect("/home.html");
+            httpResponse.sendRedirect("/home.html");
         }
 
         chain.doFilter(request, response);
@@ -88,7 +93,9 @@ public class AuthenticationFilter implements Filter {
     private void error(HttpServletResponse response, String message)
             throws IOException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
-        response.sendRedirect("/login.html");
+        if (!response.isCommitted()) {
+        	response.sendRedirect("/login.html");
+        }
     }
 
 }
