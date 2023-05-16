@@ -1,4 +1,4 @@
-package filters;
+package filter;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,12 +17,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
-import helpers.FileSystem;
+import helper.FileSystem;
 
 @WebFilter("/*")
-public class AccessLog implements Filter {
+public class AccessLogFilter implements Filter {
 
-	private static final String LOG_FILE_PATH_PARAM = "log-file-path";
+    private static final String LOG_FILE_PATH_PARAM = "log-file-path";
 
     private PrintWriter logWriter;
     private String logFilePath;
@@ -36,18 +36,18 @@ public class AccessLog implements Filter {
         Path path = Paths.get(logFilePath);
         String routeDirectory = path.getParent().toString();
         String nameFile = path.getFileName().toString();
-        
+
         // Open log file for writing
         try {
-        	if (!fileSystem.exists(routeDirectory)) {
-        		fileSystem.createDirectory(routeDirectory);
-        	}
-        	fileSystem.createFile(routeDirectory, nameFile);
+            if (!fileSystem.exists(routeDirectory)) {
+                fileSystem.createDirectory(routeDirectory);
+            }
+            fileSystem.createFile(routeDirectory, nameFile);
             logWriter = new PrintWriter(new FileWriter(logFilePath, true));
         } catch (IOException e) {
             throw new ServletException("Error opening log file", e);
-        } catch(Exception e) {
-        	throw new ServletException("Error creating directory", e);
+        } catch (Exception e) {
+            throw new ServletException("Error creating directory", e);
         }
     }
 
@@ -68,8 +68,8 @@ public class AccessLog implements Filter {
         String logEntry = currentDate + " " + clientInfo + " " + pathInfo + " " + method;
         System.out.println(logEntry);
         if (logWriter != null) {
-        	logWriter.println(logEntry);
-        	logWriter.flush();
+            logWriter.println(logEntry);
+            logWriter.flush();
         }
 
         chain.doFilter(request, response);

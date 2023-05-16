@@ -1,7 +1,6 @@
-package filters;
+package filter;
 
 import java.io.FileWriter;
-import helpers.FileSystem;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
@@ -11,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import helper.FileSystem;
 
 /**
  * Servlet implementation class Log1
@@ -24,21 +25,21 @@ public class Log1 extends HttpServlet {
     private PrintWriter logWriter;
 
     private FileSystem fileSystem = new FileSystem();
-    
+
     public void init() throws ServletException {
         // Initialization code goes here
 
         // Open log file for writing
         try {
-        	if(!fileSystem.exists(DEFAULT_LOG_FILE_PATH)) {
-        		fileSystem.createDirectory(DEFAULT_LOG_FILE_PATH);
-        	}
-        	fileSystem.createFile(DEFAULT_LOG_FILE_PATH, DEFAULT_LOG_FILE_NAME);
+            if (!fileSystem.exists(DEFAULT_LOG_FILE_PATH)) {
+                fileSystem.createDirectory(DEFAULT_LOG_FILE_PATH);
+            }
+            fileSystem.createFile(DEFAULT_LOG_FILE_PATH, DEFAULT_LOG_FILE_NAME);
             logWriter = new PrintWriter(new FileWriter(DEFAULT_LOG_FILE_PATH + "/" + DEFAULT_LOG_FILE_NAME, true));
         } catch (IOException e) {
             throw new ServletException("Error opening log file", e);
-        } catch(Exception e) {
-        	throw new ServletException("Error creating directory", e);
+        } catch (Exception e) {
+            throw new ServletException("Error creating directory", e);
         }
     }
 
@@ -56,7 +57,7 @@ public class Log1 extends HttpServlet {
         // Log the entry
         String logEntry = currentDate + " " + clientInfo + " " + servletName + " " + method;
         System.out.println(logEntry);
-        
+
         logWriter.println(logEntry);
         logWriter.flush();
     }
