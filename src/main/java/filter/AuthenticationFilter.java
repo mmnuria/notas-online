@@ -17,6 +17,7 @@ import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.annotation.WebFilter;
 import java.util.HashMap;
+import org.json.JSONArray;
 
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
@@ -34,16 +35,38 @@ public class AuthenticationFilter implements Filter {
 
         if (context.getAttribute("users") == null) {
             usersMap = new HashMap<String, User>();
-            // How to populate the usersMap when not logged in without hardcoding it?
-            usersMap.put("pro1", new User("pro1", "23456733H"));
-            usersMap.put("pro2", new User("pro2", "10293756L"));
-            usersMap.put("pro3", new User("pro3", "06374291A"));
-            usersMap.put("pro4", new User("pro4", "65748923M"));
-            usersMap.put("alu1", new User("alu1", "12345678W"));
-            usersMap.put("alu2", new User("alu2", "23456387R"));
-            usersMap.put("alu3", new User("alu3", "34567891F"));
-            usersMap.put("alu4", new User("alu4", "93847525G"));
-            usersMap.put("alu5", new User("alu5", "37264096W"));
+            httpRequest.setAttribute("dni", "111111111");
+            httpRequest.setAttribute("password", "654321");
+            // Send admin dni and password to LoginServlet
+            dispatcher = httpRequest.getRequestDispatcher("/login");
+            dispatcher.forward(httpRequest, httpResponse);
+
+            // forward request with admin key to StudentServlet and TeacherServlet
+            dispatcher = httpRequest.getRequestDispatcher("/students");
+            dispatcher.forward(httpRequest, httpResponse);
+            dispatcher = httpRequest.getRequestDispatcher("/teachers");
+            dispatcher.forward(httpRequest, httpResponse);
+
+            // Get students and teachers from request attributes
+            String students = (String) httpRequest.getAttribute("students");
+            String teachers = (String) httpRequest.getAttribute("teachers");
+
+            // Parse students and teachers as JSONArray
+            JSONArray students = new JSONArray(students);
+            JSONArray teachers = new JSONArray(teachers);
+
+            // Add students to usersMap, key will be "alu" + i
+            for (int i = 0; i < students.length(); i++) {
+                String dni = students.getJSONObject(i).getString("dni");
+                usersMap.put("alu" + i, new User("alu" + i, dni));
+            }
+
+            // Add teachers to usersMap, key will be "pro" + i
+            for (int i = 0; i < teachers.length(); i++) {
+                String dni = teachers.getJSONObject(i).getString("dni");
+                usersMap.put("pro" + i, new User("pro" + i, dni));
+            }
+
             context.setAttribute("users", usersMap);
         } else {
             usersMap = (HashMap<String, User>) context.getAttribute("users");
@@ -51,14 +74,13 @@ public class AuthenticationFilter implements Filter {
 
         if (session.getAttribute("key") == null) {
             String login = httpRequest.getRemoteUser();
-            System.out.println(login);
 
             if (login != null) {
                 session.setAttribute("dni", usersMap.get(login).getDni());
                 session.setAttribute("password", usersMap.get(login).getPassword());
                 httpRequest.setAttribute("dni", usersMap.get(login).getDni());
                 httpRequest.setAttribute("password", usersMap.get(login).getPassword());
-                
+
                 // Send dni and password to LoginServlet
                 dispatcher = httpRequest.getRequestDispatcher("/login");
                 dispatcher.forward(httpRequest, httpResponse);
@@ -72,19 +94,17 @@ public class AuthenticationFilter implements Filter {
                     cookie.setMaxAge(30 * 60);
                     httpResponse.addCookie(cookie);
                 } else {
-                    error(httpResponse, "User not found in database");
+                    error(httpResponse, "Your credentials are not valid");
                 }
             } else {
-            	System.out.print(httpRequest.getRemoteUser());
-                error(httpResponse, "User not in tomcat-users.xml");
+                error(httpResponse, "Unauthorized user");
             }
-        }
-        
-        String requestedPage = httpRequest.getRequestURI();
-        System.out.println(requestedPage);
-        if (requestedPage.endsWith("/login.html")) {
-            // Redirect the user to the home page if he's already logged in
-            httpResponse.sendRedirect("/home.html");
+        } else {
+            String requestedPage = httpRequest.getRequestURI();
+            if (requestedPage.endsWith("/login.html")) {
+                // Redirect the user to the home page if he's already logged in
+                httpResponse.sendRedirect("/home.html");
+            }
         }
 
         chain.doFilter(request, response);
@@ -94,7 +114,7 @@ public class AuthenticationFilter implements Filter {
             throws IOException {
         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
         if (!response.isCommitted()) {
-        	response.sendRedirect("/login.html");
+            response.sendRedirect("/login.html");
         }
     }
 

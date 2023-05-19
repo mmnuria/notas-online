@@ -19,7 +19,8 @@
   </welcome-file-list>
   <security-constraint>
     <auth-constraint>
-      <role-name>mirol</role-name>
+      <role-name>rolpro</role-name>
+      <role-name>rolalu</role-name>
     </auth-constraint>
   </security-constraint>
   <login-config>

@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -18,40 +17,31 @@ import config.DatabaseConfig;
 /**
  * Servlet implementation class Login
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/students")
+public class StudentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// doGet(request, response);
+		// This would be used to create a new student
+	}
 
-		// Get the dni and password from the request parameters
-		String dni = request.getParameter("dni");
-		String password = request.getParameter("password");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		// Get the key from the request parameters
+		String key = request.getParameter("key");
 
 		try {
-			// Prepare the request parameters
-			String url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/login";
-			String payload = "{ \"dni\": \"" + dni + "\", \"password\": \"" + password + "\"}";
+			// Prepare the request parameters and add key from request
+			String url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/alumnos" + "?key=" + key;
 
 			// Make the curl request
 			URL urlObj = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
-			connection.setRequestMethod("POST");
-			connection.setRequestProperty("accept", "text/plain");
-			connection.setRequestProperty("Content-Type", "application/json");
-			connection.setDoOutput(true);
-
-			// Write the request payload
-			DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-			outputStream.writeBytes(payload);
-			outputStream.flush();
-			outputStream.close();
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("accept", "application/json");
 
 			// Get the response status code
 			int statusCode = connection.getResponseCode();
@@ -67,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 				reader.close();
 				connection.disconnect();
 
-				request.setAttribute("key", responseContent.toString());
+				request.setAttribute("students", responseContent.toString());
 				// ...
 			} else {
 				// ...
