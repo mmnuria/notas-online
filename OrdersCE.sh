@@ -30,12 +30,14 @@ echo -e "\n****** El ultimo alumno de la tabla es el nuevo alumno creado ******\
 
 #Borramos el alumno que acabamos de añadir
 echo -e "\n\n****** Borramos un alumno ******\n"
-curl -s -X DELETE 'http://localhost:9090/CentroEducativo/alumnos?key='$KEY1 -H  "accept: application/json" -c cucu -b cucu
+curl -X DELETE 'http://localhost:9090/CentroEducativo/alumnos/33445566X' -H  "accept: text/plain" -c cucu -b cucu
 
 #Añadimos una asignatura
 echo -e "\n\n****** Añadimos una asignatura ******\n"
-curl -X POST "http://localhost:9090/CentroEducativo/asignaturas" -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "acronimo": "DTDE",  "creditos": 6,  "cuatrimestre": "2",  "curso": 3,  "nombre": "Direccion de Tecnologias"}'
+curl -X POST 'http://localhost:9090/CentroEducativo/asignaturas' -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "acronimo": "DTDE",  "creditos": 6,  "cuatrimestre": "2",  "curso": 3,  "nombre": "Direccion de Tecnologias"}'
 
-#Añadimos un profesor de esa asignatura
+#Añadimos un profesor de esa asignatura, pero antes debemos ser administrador
+echo -e "\n\n****** Iniciamos sesion rol admin ******\n"
+KEY1=$(curl -s --data '{"dni":"111111111","password":"654321"}' -X POST -H "content-type: application/json" http://localhost:9090/CentroEducativo/login -c cucu -b cucu)
 echo -e "\n\n****** Añadimos un profesor ******\n"
-curl -X POST "http://localhost:9090/CentroEducativo/profesores" -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "apellidos": "Gonzalez,Garcia",  "dni": "209566378V",  "nombre": "Juan",  "password": "987654321"}"
+curl -X POST 'http://localhost:9090/CentroEducativo/profesores' -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "apellidos": "Gonzalez,Garcia",  "dni": "209566378V",  "nombre": "Juan",  "password": "987654321"}"
