@@ -24,7 +24,8 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doPost(request, response);
+		RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+        rd.include(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -43,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 			URL urlObj = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
 			connection.setRequestMethod("POST");
-			connection.setRequestProperty("accept", "text/plain");
+			connection.setRequestProperty("Accept", "text/plain");
 			connection.setRequestProperty("Content-Type", "application/json");
 			connection.setDoOutput(true);
 
