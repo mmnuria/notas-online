@@ -89,7 +89,9 @@ public class AuthenticationFilter implements Filter {
 
 	private void error(HttpServletResponse response, String message) throws IOException {
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
-		response.sendRedirect("/login.html");
+		if (!response.isCommitted()) {
+			response.sendRedirect("/login.html");
+		}
 	}
 
 }
