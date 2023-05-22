@@ -9,11 +9,11 @@ curl -s -X GET 'http://localhost:9090/CentroEducativo/alumnos?key='$KEY -H "acce
 
 #Consultamos lista de alumnos y asignaturas
 echo -e "****** Lista de alumnos y asignaturas ******\n"
-curl -s -X GET 'http://localhost:9090/CentroEducativo/alumnosyasignaturas?key='$KEY - H "accept: application/json" -c cucu -b cucu
+curl -s -X GET 'http://localhost:9090/CentroEducativo/alumnosyasignaturas?key='$KEY \ - H "accept: application/json" -c cucu -b cucu
 
 #Consultamos lista de alumnos y calificaciones de DEW
 echo -e "****** Lista de alumnos y calificaciones de DEW ******\n"
-curl -s -X GET 'http://localhost:9090/CentroEducativo/asignaturas/DEW/alumnos?key='$KEY - H "accept: application/json" -c cucu -b cucu
+curl -s -X GET 'http://localhost:9090/CentroEducativo/asignaturas/DEW/alumnos?key='$KEY \ - H "accept: application/json" -c cucu -b cucu
 
 #Consultamos lista de profesores
 echo -e "\n\n****** Lista de profesores ******\n"
