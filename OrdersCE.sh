@@ -34,7 +34,10 @@ curl -X DELETE 'http://localhost:9090/CentroEducativo/alumnos/33445566X' -H  "ac
 
 #Añadimos una asignatura
 echo -e "\n\n****** Añadimos una asignatura ******\n"
-curl -X POST 'http://localhost:9090/CentroEducativo/asignaturas' -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "acronimo": "DTDE",  "creditos": 6,  "cuatrimestre": "2",  "curso": 3,  "nombre": "Direccion de Tecnologias"}'
+curl -s --data '{  "acronimo": "EDA",  "creditos": 6,  "cuatrimestre": "Segundo",  "curso": 3,  "nombre": "Estructura de datos"}' -X POST -H "content-type: application/json" 'http://localhost:9090/CentroEducativo/asignaturas?key='$KEY1 -c cucu -b cucu
+#Consultamos las asignaturas
+echo -e "\n\n****** Consultamos las asignaturas ******\n"
+curl -X GET 'http://localhost:9090/CentroEducativo/asignaturas?key='$KEY1 -H  "accept: application/json" -c cucu -b cucu
 
 #Añadimos un profesor de esa asignatura, pero antes debemos ser administrador
 echo -e "\n\n****** Iniciamos sesion rol admin ******\n"
