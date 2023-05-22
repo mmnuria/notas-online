@@ -27,19 +27,19 @@ public class AuthenticationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		RequestDispatcher dispatcher = null;
 
-		HashMap<String, User> usersMap;
+		HashMap<String, String> usersMap;
 
 		if (context.getAttribute("users") == null) {
 			usersMap = new HashMap<String, String>();
-			usersMap.add("pro0", "23456733H");
-			usersMap.add("pro1", "10293756L");
-			usersMap.add("pro2", "06374291A");
-			usersMap.add("pro3", "65748923M");
-			usersMap.add("alu0", "12345678W");
-			usersMap.add("alu1", "23456387R");
-			usersMap.add("alu2", "34567891F");
-			usersMap.add("alu3", "93847525G");
-			usersMap.add("alu4", "37264096W");
+			usersMap.put("pro0", "23456733H");
+			usersMap.put("pro1", "10293756L");
+			usersMap.put("pro2", "06374291A");
+			usersMap.put("pro3", "65748923M");
+			usersMap.put("alu0", "12345678W");
+			usersMap.put("alu1", "23456387R");
+			usersMap.put("alu2", "34567891F");
+			usersMap.put("alu3", "93847525G");
+			usersMap.put("alu4", "37264096W");
 			context.setAttribute("users", usersMap);
 		} else {
 			usersMap = (HashMap<String, String>) context.getAttribute("users");
