@@ -35,8 +35,8 @@
   </login-config>
   <security-role>
     <role-name>rolpro</role-name>
-</security-role>
-<security-role>
+  </security-role>
+  <security-role>
     <role-name>rolalu</role-name>
-</security-role>
+  </security-role>
 </web-app>
