@@ -36,6 +36,6 @@ curl -s -X DELETE 'http://localhost:9090/CentroEducativo/alumnos?key='$KEY1 -H  
 echo -e "\n\n****** Añadimos una asignatura ******\n"
 curl -X POST "http://localhost:9090/CentroEducativo/asignaturas" -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "acronimo": "DTDE",  "creditos": 6,  "cuatrimestre": "2",  "curso": 3,  "nombre": "Direccion de Tecnologias"}'
 
-#Añadimos un profesor de esa asignaturas
+#Añadimos un profesor de esa asignatura
 echo -e "\n\n****** Añadimos un profesor ******\n"
 curl -X POST "http://localhost:9090/CentroEducativo/profesores" -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "apellidos": "Gonzalez,Garcia",  "dni": "209566378V",  "nombre": "Juan",  "password": "987654321"}"
