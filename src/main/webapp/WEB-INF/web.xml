@@ -20,6 +20,8 @@
   <security-constraint>
     <auth-constraint>
       <role-name>rolpro</role-name>
+    </auth-constraint>
+    <auth-constraint>
       <role-name>rolalu</role-name>
     </auth-constraint>
   </security-constraint>

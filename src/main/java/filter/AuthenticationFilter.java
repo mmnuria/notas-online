@@ -9,15 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.Cookie;
-
-import model.User;
-
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.annotation.WebFilter;
 import java.util.HashMap;
-import org.json.JSONArray;
 
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
@@ -34,52 +30,31 @@ public class AuthenticationFilter implements Filter {
 		HashMap<String, User> usersMap;
 
 		if (context.getAttribute("users") == null) {
-			usersMap = new HashMap<String, User>();
-			httpRequest.setAttribute("dni", "111111111");
-			httpRequest.setAttribute("password", "654321");
-			// Send admin dni and password to LoginServlet
-			dispatcher = httpRequest.getRequestDispatcher("/login");
-			dispatcher.forward(httpRequest, httpResponse);
-
-			// forward request with admin key to StudentServlet and TeacherServlet
-			dispatcher = httpRequest.getRequestDispatcher("/students");
-			dispatcher.forward(httpRequest, httpResponse);
-			dispatcher = httpRequest.getRequestDispatcher("/teachers");
-			dispatcher.forward(httpRequest, httpResponse);
-
-			// Get students and teachers from request attributes
-			String students = (String) httpRequest.getAttribute("students");
-			String teachers = (String) httpRequest.getAttribute("teachers");
-
-			// Parse students and teachers as JSONArray
-			JSONArray studentsJSON = new JSONArray(students);
-			JSONArray teachersJSON = new JSONArray(teachers);
-
-			// Add students to usersMap, key will be "alu" + i
-			for (int i = 0; i < studentsJSON.length(); i++) {
-				String dni = studentsJSON.getJSONObject(i).getString("dni");
-				usersMap.put("alu" + i, new User("alu" + i, dni));
-			}
-
-			// Add teachers to usersMap, key will be "pro" + i
-			for (int i = 0; i < teachersJSON.length(); i++) {
-				String dni = teachersJSON.getJSONObject(i).getString("dni");
-				usersMap.put("pro" + i, new User("pro" + i, dni));
-			}
-
+			usersMap = new HashMap<String, String>();
+			usersMap.add("pro0", "23456733H");
+			usersMap.add("pro1", "10293756L");
+			usersMap.add("pro2", "06374291A");
+			usersMap.add("pro3", "65748923M");
+			usersMap.add("alu0", "12345678W");
+			usersMap.add("alu1", "23456387R");
+			usersMap.add("alu2", "34567891F");
+			usersMap.add("alu3", "93847525G");
+			usersMap.add("alu4", "37264096W");
 			context.setAttribute("users", usersMap);
 		} else {
-			usersMap = (HashMap<String, User>) context.getAttribute("users");
+			usersMap = (HashMap<String, String>) context.getAttribute("users");
 		}
 
 		if (session.getAttribute("key") == null) {
 			String login = httpRequest.getRemoteUser();
 
-			if (login != null) {
-				session.setAttribute("dni", usersMap.get(login).getDni());
-				session.setAttribute("password", usersMap.get(login).getPassword());
-				httpRequest.setAttribute("dni", usersMap.get(login).getDni());
-				httpRequest.setAttribute("password", usersMap.get(login).getPassword());
+			if (login != null && usersMap.containsKey(login)) {
+				session.setAttribute("dni", usersMap.get(login));
+				session.setAttribute("password", "123456");
+
+				// Set attributes to send to LoginServlet
+				httpRequest.setAttribute("dni", session.getAttribute("dni"));
+				httpRequest.setAttribute("password", session.getAttribute("password"));
 
 				// Send dni and password to LoginServlet
 				dispatcher = httpRequest.getRequestDispatcher("/login");
@@ -87,7 +62,9 @@ public class AuthenticationFilter implements Filter {
 
 				// Get key from LoginServlet
 				String key = (String) httpRequest.getAttribute("key");
+
 				if (key != null) {
+					// Set key as session attribute
 					session.setAttribute("key", key);
 					Cookie cookie = new Cookie("JSESSIONID", key);
 					// Set max age of cookie to 30 mins
@@ -112,9 +89,7 @@ public class AuthenticationFilter implements Filter {
 
 	private void error(HttpServletResponse response, String message) throws IOException {
 		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
-		if (!response.isCommitted()) {
-			response.sendRedirect("/login.html");
-		}
+		response.sendRedirect("/login.html");
 	}
 
 }
