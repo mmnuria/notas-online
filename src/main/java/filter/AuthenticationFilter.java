@@ -71,10 +71,10 @@ public class AuthenticationFilter implements Filter {
 					cookie.setMaxAge(30 * 60);
 					httpResponse.addCookie(cookie);
 				} else {
-					error(httpResponse, "Your credentials are not valid");
+					error(httpResponse, "Invalid DNI or password");
 				}
 			} else {
-				error(httpResponse, "Unauthorized user");
+				error(httpResponse, "BASIC authentication failed");
 			}
 		} else {
 			String requestedPage = httpRequest.getRequestURI();
