@@ -27,7 +27,7 @@ public class AuthenticationFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-
+		System.out.println("AUTH FILTER");
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession();
@@ -78,6 +78,7 @@ public class AuthenticationFilter implements Filter {
 
 						// Set key as session attribute
 						String key = responseContent.toString();
+						System.out.println(key);
 						session.setAttribute("key", key);
 						Cookie cookie = new Cookie("JSESSIONID", key);
 						// Set max age of cookie to 30 mins

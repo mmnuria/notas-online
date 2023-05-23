@@ -42,10 +42,13 @@ public class SubjectServlet extends HttpServlet {
 			URL urlObj = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
 			connection.setRequestMethod("GET");
-			connection.setRequestProperty("Accept", "text/plain");
+			connection.setRequestProperty("Accept", "application/json");
+			
+			System.out.println(url);
 
 			// Get the response status code
 			int statusCode = connection.getResponseCode();
+			System.out.println(statusCode);
 
 			// Read the response
 			if (statusCode == 200) {
