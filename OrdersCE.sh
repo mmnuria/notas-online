@@ -19,6 +19,7 @@ curl -s -X GET 'http://localhost:9090/CentroEducativo/asignaturas/DEW/alumnos?ke
 echo -e "\n\n****** Lista de profesores ******\n"
 curl -s -X GET 'http://localhost:9090/CentroEducativo/profesores?key='$KEY -H "accept: application/json" -c cucu -b cucu
 
+
 #Añadimos un alumno, pero antes debemos de ser administrador
 echo -e "\n\n****** Iniciamos sesion rol admin ******\n"
 KEY1=$(curl -s --data '{"dni":"111111111","password":"654321"}' -X POST -H "content-type: application/json" http://localhost:9090/CentroEducativo/login -c cucu -b cucu)
@@ -28,13 +29,12 @@ echo -e "\n****** Obtenemos de nuevo los alumnos ******\n"
 curl -s -X GET 'http://localhost:9090/CentroEducativo/alumnos?key='$KEY1 -H "accept: application/json" -c cucu -b cucu
 echo -e "\n****** El ultimo alumno de la tabla es el nuevo alumno creado ******\n"
 
-#Borramos el alumno que acabamos de añadir
-echo -e "\n\n****** Borramos un alumno ******\n"
-curl -X DELETE 'http://localhost:9090/CentroEducativo/alumnos/33445566X' -H  "accept: text/plain" -c cucu -b cucu
-
-#Añadimos una asignatura
+#Añadimos una asignatura,debemos ser administrador
+echo -e "\n\n****** Iniciamos sesion rol admin ******\n"
+KEY1=$(curl -s --data '{"dni":"111111111","password":"654321"}' -X POST -H "content-type: application/json" http://localhost:9090/CentroEducativo/login -c cucu -b cucu)44444444444444444444
 echo -e "\n\n****** Añadimos una asignatura ******\n"
-curl -s --data '{  "acronimo": "EDA",  "creditos": 6,  "cuatrimestre": "Segundo",  "curso": 3,  "nombre": "Estructura de datos"}' -X POST -H "content-type: application/json" 'http://localhost:9090/CentroEducativo/asignaturas?key='$KEY1 -c cucu -b cucu
+curl -s --data '{"acronimo": "EDA",  "creditos": 6,  "cuatrimestre": "Segundo",  "curso": 3,  "nombre": "Estructura de datos"}' -X POST -H "content-type: application/json" 'http://localhost:9090/CentroEducativo/asignaturas?key='$KEY1 -c cucu -b cucu
+
 #Consultamos las asignaturas
 echo -e "\n\n****** Consultamos las asignaturas ******\n"
 curl -X GET 'http://localhost:9090/CentroEducativo/asignaturas?key='$KEY1 -H  "accept: application/json" -c cucu -b cucu
@@ -43,4 +43,7 @@ curl -X GET 'http://localhost:9090/CentroEducativo/asignaturas?key='$KEY1 -H  "a
 echo -e "\n\n****** Iniciamos sesion rol admin ******\n"
 KEY1=$(curl -s --data '{"dni":"111111111","password":"654321"}' -X POST -H "content-type: application/json" http://localhost:9090/CentroEducativo/login -c cucu -b cucu)
 echo -e "\n\n****** Añadimos un profesor ******\n"
-curl -X POST 'http://localhost:9090/CentroEducativo/profesores' -H  "accept: text/plain" -H  "Content-Type: application/json" -d '{  "apellidos": "Gonzalez,Garcia",  "dni": "209566378V",  "nombre": "Juan",  "password": "987654321"}"
+curl -s --data '{  "apellidos": "Gonzalez,Garcia",  "dni": "209566378V",  "nombre": "Juan",  "password": "987654321"}' -X POST -H "content-type: application/json" 'http://localhost:9090/CentroEducativo/profesores?key='$KEY1 -c cucu -b cucu
+#Mostramos la lista de profesores
+echo -e "\n\n****** Mostramos la lista de profesores ******\n"
+curl -s -X GET 'http://localhost:9090/CentroEducativo/profesores?key='$KEY1 -H "accept: application/json" -c cucu -b cucu
