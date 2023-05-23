@@ -3,7 +3,6 @@ package filter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.ServletException;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,12 +21,10 @@ import java.net.URL;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.annotation.WebFilter;
-import java.util.HashMap;
 
 @WebFilter("/*")
 public class AuthenticationFilter implements Filter {
 
-	@SuppressWarnings("unchecked")
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 
@@ -87,26 +84,19 @@ public class AuthenticationFilter implements Filter {
 						cookie.setMaxAge(30 * 60);
 						httpResponse.addCookie(cookie);
 					} else {
-						error(httpResponse, "Invalid DNI or password");
+						httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error establishing connection to database");
 					}
 					httpResponse.setStatus(statusCode);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
-				error(httpResponse, "BASIC authentication failed");
+				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid DNI or password");
 			}
 		}
 		
 		// continues the filter chain
         // allows the request to reach the destination
         chain.doFilter(request, response);
-	}
-
-	private void error(HttpServletResponse response, String message) throws IOException {
-		if (!response.isCommitted()) {
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
-			response.sendRedirect("login.html");
-		}
 	}
 }
