@@ -36,9 +36,9 @@ public class AuthenticationFilter implements Filter {
 		HttpSession session = httpRequest.getSession();
 		
 		boolean isLoggedIn = (session != null && session.getAttribute("dni") != null);
-		boolean keyIsSet = (session.getAttribute("key") != null);
+		boolean isKeySet = (session.getAttribute("key") != null);
 		
-		if(!isLoggedIn && !keyIsSet)  
+		if(!isLoggedIn && !isKeySet)  
 		{
 			String login = httpRequest.getRemoteUser();
 
