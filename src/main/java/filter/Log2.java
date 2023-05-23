@@ -1,7 +1,6 @@
-package filters;
+package filter;
 
 import java.io.FileWriter;
-import helpers.FileSystem;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -15,6 +14,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import helper.FileSystem;
 
 /**
  * Servlet implementation class Log2
@@ -36,18 +37,18 @@ public class Log2 extends HttpServlet {
         Path path = Paths.get(logFilePath);
         String routeDirectory = path.getParent().toString();
         String nameFile = path.getFileName().toString();
-        
+
         // Open log file for writing
         try {
-        	if (!fileSystem.exists(routeDirectory)) {
-        		fileSystem.createDirectory(routeDirectory);
-        	}
-        	fileSystem.createFile(routeDirectory, nameFile);
+            if (!fileSystem.exists(routeDirectory)) {
+                fileSystem.createDirectory(routeDirectory);
+            }
+            fileSystem.createFile(routeDirectory, nameFile);
             logWriter = new PrintWriter(new FileWriter(logFilePath, true));
         } catch (IOException e) {
             throw new ServletException("Error opening log file", e);
-        } catch(Exception e) {
-        	throw new ServletException("Error creating directory", e);
+        } catch (Exception e) {
+            throw new ServletException("Error creating directory", e);
         }
     }
 
