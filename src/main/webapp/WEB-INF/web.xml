@@ -17,6 +17,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>login.html</welcome-file>
   </welcome-file-list>
+  
   <security-constraint>
   	<web-resource-collection>
   	  <web-resource-name>Protected Area</web-resource-name>
@@ -29,14 +30,17 @@
       <role-name>rolalu</role-name>
     </auth-constraint>
   </security-constraint>
+  
   <login-config>
     <auth-method>BASIC</auth-method>
     <realm-name>Protected</realm-name>
   </login-config>
+  
   <security-role>
     <role-name>rolpro</role-name>
   </security-role>
   <security-role>
     <role-name>rolalu</role-name>
   </security-role>
+  
 </web-app>

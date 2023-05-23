@@ -33,31 +33,17 @@ public class AuthenticationFilter implements Filter {
 
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		ServletContext context = httpRequest.getServletContext();
 		HttpSession session = httpRequest.getSession();
-		HashMap<String, String> usersMap;
-
-		if (context.getAttribute("users") == null) {
-			usersMap = new HashMap<String, String>();
-			usersMap.put("pro0", "23456733H");
-			usersMap.put("pro1", "10293756L");
-			usersMap.put("pro2", "06374291A");
-			usersMap.put("pro3", "65748923M");
-			usersMap.put("alu0", "12345678W");
-			usersMap.put("alu1", "23456387R");
-			usersMap.put("alu2", "34567891F");
-			usersMap.put("alu3", "93847525G");
-			usersMap.put("alu4", "37264096W");
-			context.setAttribute("users", usersMap);
-		} else {
-			usersMap = (HashMap<String, String>) context.getAttribute("users");
-		}
-
-		if (session.getAttribute("key") == null) {
+		
+		boolean isLoggedIn = (session != null && session.getAttribute("dni") != null);
+		boolean keyIsSet = (session.getAttribute("key") != null);
+		
+		if(!isLoggedIn && !keyIsSet)  
+		{
 			String login = httpRequest.getRemoteUser();
 
-			if (login != null && usersMap.containsKey(login)) {
-				session.setAttribute("dni", usersMap.get(login));
+			if (login != null) {
+				session.setAttribute("dni", login);
 				session.setAttribute("password", "123456");
 
 				try {
@@ -94,8 +80,9 @@ public class AuthenticationFilter implements Filter {
 						connection.disconnect();
 
 						// Set key as session attribute
-						session.setAttribute("key", responseContent.toString());
-						Cookie cookie = new Cookie("JSESSIONID", responseContent.toString());
+						String key = responseContent.toString();
+						session.setAttribute("key", key);
+						Cookie cookie = new Cookie("JSESSIONID", key);
 						// Set max age of cookie to 30 mins
 						cookie.setMaxAge(30 * 60);
 						httpResponse.addCookie(cookie);
@@ -109,22 +96,17 @@ public class AuthenticationFilter implements Filter {
 			} else {
 				error(httpResponse, "BASIC authentication failed");
 			}
-		} else {
-			String requestedPage = httpRequest.getRequestURI();
-			if (requestedPage.endsWith("/login.html")) {
-				// Redirect the user to the home page if he's already logged in
-				httpResponse.sendRedirect("/home.html");
-			}
 		}
-
-		chain.doFilter(request, response);
+		
+		// continues the filter chain
+        // allows the request to reach the destination
+        chain.doFilter(request, response);
 	}
 
 	private void error(HttpServletResponse response, String message) throws IOException {
 		if (!response.isCommitted()) {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, message);
-			response.sendRedirect("/login.html");
+			response.sendRedirect("login.html");
 		}
 	}
-
 }
