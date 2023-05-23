@@ -89,6 +89,7 @@ public class AuthenticationFilter implements Filter {
 					httpResponse.setStatus(statusCode);
 				} catch (Exception e) {
 					e.printStackTrace();
+					httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error establishing connection to database");
 				}
 			} else {
 				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid DNI or password");
