@@ -84,7 +84,7 @@ public class AuthenticationFilter implements Filter {
 						cookie.setMaxAge(30 * 60);
 						httpResponse.addCookie(cookie);
 					} else {
-						httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error establishing connection to database");
+						httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Data authentication failed");
 					}
 					httpResponse.setStatus(statusCode);
 				} catch (Exception e) {
@@ -92,7 +92,7 @@ public class AuthenticationFilter implements Filter {
 					httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error establishing connection to database");
 				}
 			} else {
-				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid DNI or password");
+				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Basic authentication failed");
 			}
 		}
 		
