@@ -28,11 +28,7 @@ curl -X GET 'http://localhost:9090/CentroEducativo/asignaturas/DEW/profesores?ke
 #echo -e "\n\n****** Añadimos la nota de un 9 al alumno 12345678W de la asignatura DEW ******\n"
 #curl -X PUT -H "accept: text/plain" -H "Content-Type: application/json" -d "{9}" 'http://localhost:9090/CentroEducativo/alumnos/12345678W/asignaturas?key='$KEY2'/DEW' -c cucu -b cucu -v
 
-echo -e "\n\n****** Extraemos de nuevo la lista de alumnos y calificaciones de DEW ******\n"
-KEY3=$(curl -s --data '{"dni":"23456733H","password":"123456"}' -X POST -H "content-type: application/json" http://localhost:9090/CentroEducativo/login -c cucu -b cucu)
-curl -s -X GET 'http://localhost:9090/CentroEducativo/asignaturas/DEW/alumnos?key='$KEY3 - H "accept: application/json" -c cucu -b cucu
-
-
+#Para crear un alumno nuevo es necesario ser ROL admin
 echo -e "****** Creamos un nuevo alumno ******\n"
 KEY2=$(curl -s --data '{"dni":"111111111","password":"654321"}' -X POST -H "content-type: application/json" 'http://localhost:9090/CentroEducativo/login' -c cucu -b cucu)
 
