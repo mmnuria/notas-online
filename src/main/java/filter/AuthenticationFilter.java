@@ -31,12 +31,11 @@ public class AuthenticationFilter implements Filter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession();
-		
+
 		boolean isLoggedIn = (session != null && session.getAttribute("dni") != null);
 		boolean isKeySet = (session.getAttribute("key") != null);
-		
-		if(!isLoggedIn && !isKeySet)  
-		{
+
+		if (!isLoggedIn && !isKeySet) {
 			String login = httpRequest.getRemoteUser();
 
 			if (login != null) {
@@ -46,7 +45,8 @@ public class AuthenticationFilter implements Filter {
 				try {
 					// Prepare the request parameters
 					String url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/login";
-					String payload = "{ \"dni\": \"" + session.getAttribute("dni") + "\", \"password\": \"" + session.getAttribute("password") + "\"}";
+					String payload = "{ \"dni\": \"" + session.getAttribute("dni") + "\", \"password\": \""
+							+ session.getAttribute("password") + "\"}";
 
 					// Make the curl request
 					URL urlObj = new URL(url);
@@ -89,15 +89,16 @@ public class AuthenticationFilter implements Filter {
 					httpResponse.setStatus(statusCode);
 				} catch (Exception e) {
 					e.printStackTrace();
-					httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error establishing connection to database");
+					httpResponse.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+							"Error establishing connection to database");
 				}
 			} else {
 				httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Basic authentication failed");
 			}
 		}
-		
+
 		// continues the filter chain
-        // allows the request to reach the destination
-        chain.doFilter(request, response);
+		// allows the request to reach the destination
+		chain.doFilter(request, response);
 	}
 }
