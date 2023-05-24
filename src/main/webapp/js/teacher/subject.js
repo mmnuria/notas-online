@@ -1,13 +1,13 @@
 function fetchSubjects() {
   // Make an AJAX request to the servlet endpoint
-  fetch('Subject')
+  fetch('TeacherSubject')
     .then(response => response.json()) // Parse the response as JSON
     .then(subjects => {
       const subjectListElement = document.getElementById('subject-list');
 
       // Clear any existing subjects
       subjectListElement.innerHTML = '';
-
+      
       // Iterate over the subjects and create a card for each subject
       subjects.forEach(subject => {
         const subjectCard = document.createElement('div');

@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import config.DatabaseConfig;
 
 
-@WebServlet("/Subject")
-public class SubjectServlet extends HttpServlet {
+@WebServlet("/TeacherSubject")
+public class TeacherSubject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -36,8 +36,6 @@ public class SubjectServlet extends HttpServlet {
 			// Prepare the request parameters
 			if (request.isUserInRole("rolpro")) {
 				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/profesores/" + dni + "/asignaturas?key=" + key;
-			} else if (request.isUserInRole("rolalu")) {
-				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/alumnos/" + dni + "/asignaturas?key=" + key;
 			}
 			
 			//String cookie = response.getHeader("Set-Cookie");
@@ -48,15 +46,12 @@ public class SubjectServlet extends HttpServlet {
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
 			connection.setRequestProperty("cookie", cookie);
-			
-			System.out.println(url);
 
 			// Get the response status code
 			int statusCode = connection.getResponseCode();
-			System.out.println(statusCode);
 
 			// Read the response
-			if (statusCode == 200) {
+			if (statusCode == HttpServletResponse.SC_OK) {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				String line;
 				StringBuilder responseContent = new StringBuilder();

@@ -27,7 +27,6 @@ public class AuthenticationFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		System.out.println("AUTH FILTER");
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 		HttpSession session = httpRequest.getSession();
@@ -66,7 +65,7 @@ public class AuthenticationFilter implements Filter {
 					int statusCode = connection.getResponseCode();
 
 					// Read the response
-					if (statusCode == 200) {
+					if (statusCode == HttpServletResponse.SC_OK) {
 						BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 						String line;
 						StringBuilder responseContent = new StringBuilder();
@@ -77,7 +76,6 @@ public class AuthenticationFilter implements Filter {
 
 						// Set key as session attribute
 						String key = responseContent.toString();
-						System.out.println(key);
 						session.setAttribute("key", key);
 						
 						String cookieString = connection.getHeaderFields().get("Set-Cookie").get(0);
