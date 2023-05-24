@@ -74,15 +74,22 @@ public class AuthenticationFilter implements Filter {
 							responseContent.append(line);
 						}
 						reader.close();
-						connection.disconnect();
 
 						// Set key as session attribute
 						String key = responseContent.toString();
 						session.setAttribute("key", key);
-						Cookie cookie = new Cookie("JSESSIONID", key);
+						
+						String cookieString = connection.getHeaderFields().get("Set-Cookie").get(0);
+						session.setAttribute("cookie", cookieString);
+						
+						String[] cookieParams = SetCookie(cookieString);
+						Cookie cookie = new Cookie("JSESSIONID", cookieParams[0]);
+						cookie.setPath(cookieParams[1]);
 						// Set max age of cookie to 30 mins
 						cookie.setMaxAge(30 * 60);
 						httpResponse.addCookie(cookie);
+						
+						connection.disconnect();
 					} else {
 						httpResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Data authentication failed");
 					}
@@ -99,5 +106,21 @@ public class AuthenticationFilter implements Filter {
 		// continues the filter chain
         // allows the request to reach the destination
         chain.doFilter(request, response);
+	}
+	
+	String[] SetCookie(String cookie) 
+	{
+		String cookieSubs = cookie.substring(cookie.indexOf("=") + 1);
+		String[] cookieSplited = cookieSubs.split("\\s+");
+		
+		String cookieValue = cookieSplited[0].substring(0, cookieSplited[0].indexOf(";"));
+		
+		String cookiePath = cookieSplited[1].substring(cookieSplited[1].indexOf("=") + 1);
+		cookiePath = cookiePath.substring(0, cookiePath.indexOf(";"));
+		
+		cookieSplited[0] = cookieValue;
+		cookieSplited[1] = cookiePath;
+		
+		return cookieSplited;
 	}
 }
