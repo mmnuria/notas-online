@@ -10,9 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import config.DatabaseConfig;
-// import org.json.JSONArray;
 
 
 @WebServlet("/Subject")
@@ -26,9 +26,11 @@ public class SubjectServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String dni = (String) request.getSession().getAttribute("dni");
-		String key = (String) request.getSession().getAttribute("key");
-
+		HttpSession session = request.getSession();
+		String dni = (String) session.getAttribute("dni");
+		String key = (String) session.getAttribute("key");
+		String cookie = (String) session.getAttribute("cookie");
+		
 		try {
 			String url = null;
 			// Prepare the request parameters
@@ -37,12 +39,15 @@ public class SubjectServlet extends HttpServlet {
 			} else if (request.isUserInRole("rolalu")) {
 				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/alumnos/" + dni + "/asignaturas?key=" + key;
 			}
-
+			
+			//String cookie = response.getHeader("Set-Cookie");
+			
 			// Make the curl request
 			URL urlObj = new URL(url);
 			HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Accept", "application/json");
+			connection.setRequestProperty("cookie", cookie);
 			
 			System.out.println(url);
 
