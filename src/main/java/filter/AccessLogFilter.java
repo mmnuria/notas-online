@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -57,10 +56,10 @@ public class AccessLogFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         // Get relevant information
-        String formData = httpRequest.getQueryString();
+        // String formData = httpRequest.getQueryString();
         String clientInfo = httpRequest.getRemoteUser() + " " + httpRequest.getRemoteAddr();
         String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String pathInfo = httpRequest.getPathInfo();
+        String pathInfo = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
         // String uri = httpRequest.getRequestURI();
         String method = httpRequest.getMethod();
 
