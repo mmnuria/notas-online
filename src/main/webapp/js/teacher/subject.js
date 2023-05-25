@@ -15,7 +15,6 @@ function fetchSubjects() {
             // Iterate over the subjects and create a card for each subject
             subjects.forEach(subject => {
                 const subjectCard = document.createElement('div');
-                subjectCard.classList.add('col');
                 subjectCard.innerHTML = `<a href="#subject-${subject.acronimo}" class="subject-link" data-toggle="tab" data-subject="${subject.nombre}">${subject.nombre}</a>`;
                 subjectListElement.appendChild(subjectCard);
 
