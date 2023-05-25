@@ -15,8 +15,8 @@ import javax.servlet.http.HttpSession;
 import config.DatabaseConfig;
 
 
-@WebServlet("/TeacherSubject")
-public class TeacherSubject extends HttpServlet {
+@WebServlet("/TeacherServlet")
+public class TeacherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,9 +34,7 @@ public class TeacherSubject extends HttpServlet {
 		try {
 			String url = null;
 			// Prepare the request parameters
-			if (request.isUserInRole("rolpro")) {
-				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/profesores/" + dni + "/asignaturas?key=" + key;
-			}
+			url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/profesores/" + dni + "/asignaturas?key=" + key;
 			
 			//String cookie = response.getHeader("Set-Cookie");
 			
