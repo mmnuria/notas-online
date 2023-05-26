@@ -18,7 +18,7 @@ public class WelcomeServlet extends HttpServlet {
 		String role = request.getParameter("role");
 
 		if (role.equals("rolpro") & request.isUserInRole("rolpro")) {
-			response.sendRedirect("teacher_home.html");
+			response.sendRedirect("Teacher/Subject");
 		} else if (role.equals("rolalu") & request.isUserInRole("rolalu")) {
 			response.sendRedirect("student_home.html");
 		} else {
