@@ -1,6 +1,6 @@
 function fetchSubjects() {
 	// Make an AJAX request to the servlet endpoint
-	fetch("../API/Teacher/Subject")
+	fetch("API/Teacher/Subject")
 		.then(response => response.json()) // Parse the response as JSON
 		.then(subjects => {
 			const subjectListElement = document.getElementById('subject-list');

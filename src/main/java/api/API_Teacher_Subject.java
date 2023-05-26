@@ -17,7 +17,7 @@ import config.DatabaseConfig;
 
 
 @WebServlet("/API/Teacher/Subject")
-public class SubjectServlet extends HttpServlet {
+public class API_Teacher_Subject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

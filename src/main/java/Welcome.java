@@ -1,4 +1,3 @@
-package teacher;
 
 import java.io.IOException;
 
@@ -10,24 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Teacher
+ * Servlet implementation class WelcomeServlet
  */
-@WebServlet("/Teacher")
-public class Teacher extends HttpServlet {
+@WebServlet("/Welcome")
+public class Welcome extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
-		if(request.isUserInRole("rolpro")) 
-		{
-			RequestDispatcher rd = request.getRequestDispatcher("teacher_home.html");
-	        rd.include(request, response);
-		}
-		else 
-		{
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Action unauthorized.");
-		}
+			throws ServletException, IOException {
+		RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
+        rd.include(request, response);
 	}
 
 }
