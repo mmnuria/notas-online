@@ -1,6 +1,6 @@
 function fetchSubjects() {
 	rootUrl = `${window.location.origin}/notas-online`;
-	
+
 	// Make an AJAX request to the servlet endpoint
 	fetch(`${rootUrl}/API/Student/Subjects`)
 		.then(response => response.json()) // Parse the response as JSON
@@ -26,11 +26,8 @@ function fetchSubjects() {
 				const tabLink = document.createElement('li');
 				tabLink.classList.add('nav-item');
 				tabLink.innerHTML = `
-					<div>
                     	<a class="nav-link" id="${subject.asignatura}-tab" data-toggle="tab" href="#subject-${subject.asignatura}">${subject.asignatura}</a>
-                		<div>Nota : ${subject.nota}</div>
-            		</div>`
-                ;
+                `;
 				subjectTabsElement.appendChild(tabLink);
 
 				// Create the content for the subject tab
@@ -43,38 +40,45 @@ function fetchSubjects() {
 			// Add click event listeners to the subject links
 			const subjectLinks = document.querySelectorAll('.subject-link');
 			subjectLinks.forEach(subjectLink => {
-				subjectLink.addEventListener('click', function(event) {
-					event.preventDefault(); // Prevent the default link behavior
-					const subjectName = this.getAttribute('data-subject');
-					const subjectAcronym = this.getAttribute('href').substring(1); // Remove the leading #
+				subjectLink.addEventListener('click', function(subject) {
+					return function(event) {
+						event.preventDefault(); // Prevent the default link behavior
+						const subjectName = subject.getAttribute('data-subject');
+						const subjectAcronym = subject.getAttribute('href').substring(1); // Remove the leading #
 
-					// Show the tab for the selected subject
-					const tabElement = document.getElementById(subjectAcronym);
-					const tabContainerElement = document.querySelector('.tab-content');
-					const tabPaneElements = tabContainerElement.querySelectorAll('.tab-pane');
+						// Show the tab for the selected subject
+						const tabElement = document.getElementById(subjectAcronym);
+						const tabContainerElement = document.querySelector('.tab-content');
+						const tabPaneElements = tabContainerElement.querySelectorAll('.tab-pane');
 
-					// Show the selected tab and hide other tabs
-					tabPaneElements.forEach(tabPane => {
-						if (tabPane.id === subjectAcronym) {
-							tabPane.classList.add('active', 'show');
-						} else {
-							tabPane.classList.remove('active', 'show');
-						}
-					});
+						// Show the selected tab and hide other tabs
+						tabPaneElements.forEach(tabPane => {
+							if (tabPane.id === subjectAcronym) {
+								tabPane.classList.add('active', 'show');
+							} else {
+								tabPane.classList.remove('active', 'show');
+							}
+						});
 
-					// Activate the selected tab navigation link
-					const tabNavLinks = document.querySelectorAll('.nav-link');
-					tabNavLinks.forEach(tabNavLink => {
-						if (tabNavLink.getAttribute('href') === `#${subjectAcronym}`) {
-							tabNavLink.classList.add('active');
-						} else {
-							tabNavLink.classList.remove('active');
-						}
-					});
+						// Activate the selected tab navigation link
+						const tabNavLinks = document.querySelectorAll('.nav-link');
+						tabNavLinks.forEach(tabNavLink => {
+							if (tabNavLink.getAttribute('href') === `#${subjectAcronym}`) {
+								tabNavLink.classList.add('active');
+							} else {
+								tabNavLink.classList.remove('active');
+							}
+						});
 
-					// TODO: Add code to display other information for the selected subject
-					console.log('Clicked subject:', subjectAcronym);
-				});
+						// Clear the contents of the tab
+						tabElement.innerHTML = '';
+						// Retrieve and display the grade
+						const gradeElement = document.createElement('p');
+						gradeElement.innerText = `Nota: ${subject.nota}`;
+						tabElement.appendChild(gradeElement);
+					};
+				}(subjectLink));
+
 			});
 		})
 		.catch(error => {
