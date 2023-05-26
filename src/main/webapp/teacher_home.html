@@ -15,7 +15,16 @@
 <body>
 
 	<div class="container">
-		<div class="row justify-content-center mt-5">
+		<div class="row mt-3">
+			<div class="col-md-12">
+				<div class="float-left mt-2">
+					<p id="placeholder-text" class="text-muted">You are logged in
+						as [full name]...</p>
+				</div>
+				<button class="btn btn-primary float-right mt-2" id="logout-button">Logout</button>
+			</div>
+		</div>
+		<div class="row mt-4">
 			<div class="col-md-4">
 				<div class="card">
 					<div class="card-header">
@@ -23,25 +32,21 @@
 					</div>
 					<div class="card-body">
 						<div class="col" id="subject-list">
-							<!-- Subject cards will be generated here dynamically -->
+							<!-- Subject list will be generated here dynamically -->
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-8">
-				<!-- Move the tabs container to a separate column -->
 				<ul class="nav nav-tabs" id="subject-tabs">
 					<!-- Subject tabs will be generated here dynamically -->
 				</ul>
-			</div>
-			<div class="col-md-8">
 				<div class="tab-content" id="subject-content">
 					<!-- Subject content will be displayed here dynamically -->
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<!-- Bootstrap JS -->
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -52,6 +57,21 @@
 
 	<!-- Custom JavaScript -->
 	<script src="js/teacher/subject.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Retrieve full name using TeacherServlet and display it
+			// $.get("/Teacher", function(data) {
+			// var fullName = data.nombre + " " + data.apellidos;
+			// $("#placeholder-text").text(
+			// "You are logged in as " + fullName);
+			// });
+
+			// Logout button click event handler
+			$("#logout-button").click(function() {
+				window.location.href = "Logout";
+			});
+		});
+	</script>
 </body>
 
 </html>

@@ -1,18 +1,38 @@
 body {
-    background-color: #F7F7F7;
+	background-color: #F7F7F7;
+	padding: 20px;
 }
 
 .card-header {
-    background-color: #0D47A1;
-    color: #FFFFFF;
+	background-color: #0D47A1;
+	color: #FFFFFF;
 }
 
 .btn-primary {
-    background-color: #0D47A1;
-    border-color: #0D47A1;
+	background-color: #0D47A1;
+	border-color: #0D47A1;
 }
 
 .btn-primary:hover {
-    background-color: #1E88E5;
-    border-color: #1E88E5;
+	background-color: #1E88E5;
+	border-color: #1E88E5;
+}
+
+#logout-button {
+	margin-top: 10px;
+}
+
+#placeholder-text {
+	margin-bottom: 0;
+	font-size: 14px;
+}
+
+.nav-tabs .nav-link {
+	color: #000;
+	border-radius: 0;
+	border: none;
+}
+
+.nav-tabs .nav-link:hover {
+	background-color: #F7F7F7;
 }

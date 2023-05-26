@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://JAVA.sun.com/xml/ns/javaee"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-  id="WebApp_ID" version="2.5">
-  <display-name>notas-online</display-name>
-  <context-param>
-    <param-name>log-file-path</param-name>
-    <param-value>/home/user/notas-online/access.log</param-value>
-  </context-param>
-  <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>welcome.html</welcome-file>
-  </welcome-file-list>
-  
-  <security-constraint>
-  	<web-resource-collection>
-  	  <web-resource-name>Protected Area</web-resource-name>
-      <url-pattern>/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>rolpro</role-name>
-    </auth-constraint>
-    <auth-constraint>
-      <role-name>rolalu</role-name>
-    </auth-constraint>
-  </security-constraint>
-  
-  <login-config>
-    <auth-method>BASIC</auth-method>
-    <realm-name>Protected</realm-name>
-  </login-config>
-  
-  <security-role>
-    <role-name>rolpro</role-name>
-  </security-role>
-  <security-role>
-    <role-name>rolalu</role-name>
-  </security-role>
-  
+	xmlns="http://JAVA.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>notas-online</display-name>
+	<context-param>
+		<param-name>log-file-path</param-name>
+		<param-value>/home/user/notas-online/access.log</param-value>
+	</context-param>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>welcome.html</welcome-file>
+	</welcome-file-list>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Protected Area</web-resource-name>
+			<url-pattern>/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>rolpro</role-name>
+		</auth-constraint>
+		<auth-constraint>
+			<role-name>rolalu</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>Protected</realm-name>
+	</login-config>
+
+	<security-role>
+		<role-name>rolpro</role-name>
+	</security-role>
+	<security-role>
+		<role-name>rolalu</role-name>
+	</security-role>
+
 </web-app>

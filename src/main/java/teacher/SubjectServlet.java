@@ -1,3 +1,4 @@
+package teacher;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import config.DatabaseConfig;
 
 
-@WebServlet("/TeacherServlet")
-public class TeacherServlet extends HttpServlet {
+@WebServlet("/Teacher/Subject")
+public class SubjectServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
