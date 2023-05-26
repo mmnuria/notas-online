@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Teacher
  */
-@WebServlet("/Teacher")
+@WebServlet("/Teacher/Subjects")
 public class Teacher extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,7 @@ public class Teacher extends HttpServlet {
 	{
 		if(request.isUserInRole("rolpro")) 
 		{
-			RequestDispatcher rd = request.getRequestDispatcher("teacher_home.html");
+			RequestDispatcher rd = request.getRequestDispatcher("../teacher_subjects.html");
 	        rd.include(request, response);
 		}
 		else 

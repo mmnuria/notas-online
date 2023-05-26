@@ -1,6 +1,6 @@
 function fetchSubjects() {
 	// Make an AJAX request to the servlet endpoint
-	fetch("API/Teacher/Subject")
+	fetch("../API/Student/Subjects")
 		.then(response => response.json()) // Parse the response as JSON
 		.then(subjects => {
 			const subjectListElement = document.getElementById('subject-list');
@@ -16,7 +16,7 @@ function fetchSubjects() {
 			subjects.forEach(subject => {
 				const subjectCard = document.createElement('div');
 				subjectCard.innerHTML = `
-					<a href="#subject-${subject.acronimo}" class="subject-link" data-toggle="tab" data-subject="${subject.nombre}">${subject.nombre}</a>
+					<a href="#subject-${subject.asignatura}" class="subject-link" data-toggle="tab" data-subject="${subject.asignatura}">${subject.asignatura}</a>
 				`;
 				subjectListElement.appendChild(subjectCard);
 
@@ -24,14 +24,17 @@ function fetchSubjects() {
 				const tabLink = document.createElement('li');
 				tabLink.classList.add('nav-item');
 				tabLink.innerHTML = `
-                    <a class="nav-link" id="${subject.acronimo}-tab" data-toggle="tab" href="#subject-${subject.acronimo}">${subject.acronimo}</a>
-                `;
+					<div>
+                    	<a class="nav-link" id="${subject.asignatura}-tab" data-toggle="tab" href="#subject-${subject.asignatura}">${subject.asignatura}</a>
+                		<div>Nota : ${subject.nota}</div>
+            		</div>`
+                ;
 				subjectTabsElement.appendChild(tabLink);
 
 				// Create the content for the subject tab
 				const tabContent = document.createElement('div');
 				tabContent.classList.add('tab-pane', 'fade');
-				tabContent.id = `subject-${subject.acronimo}`;
+				tabContent.id = `subject-${subject.asignatura}`;
 				subjectContentElement.appendChild(tabContent);
 			});
 
@@ -68,7 +71,7 @@ function fetchSubjects() {
 					});
 
 					// TODO: Add code to display other information for the selected subject
-					console.log('Clicked subject:', subjectName);
+					console.log('Clicked subject:', subjectAcronym);
 				});
 			});
 		})
