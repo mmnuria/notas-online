@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Teacher
  */
 @WebServlet("/Teacher/Subjects")
-public class Teacher extends HttpServlet {
+public class Teacher_Subjects extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
