@@ -8,7 +8,7 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <!-- Custom CSS -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../css/style.css">
 <link rel="shortcut icon" href="#" />
 </head>
 
@@ -19,7 +19,7 @@
 			<div class="col-md-12">
 				<div class="float-left mt-2">
 					<p id="placeholder-text" class="text-muted">You are logged in
-						as [full name]...</p>
+						as <span id="contact-name">[full name]</span></p>
 				</div>
 				<button class="btn btn-primary float-right mt-2" id="logout-button">Logout</button>
 			</div>
@@ -57,6 +57,7 @@
 
 	<!-- Custom JavaScript -->
 	<script src="../js/student/student_subjects.js"></script>
+	<script src="../js/person_details.js"></script>
 	<script>
 		$(document).ready(function() {
 			// Retrieve full name using TeacherServlet and display it
