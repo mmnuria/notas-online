@@ -1,6 +1,8 @@
 function fetchSubjects() {
+	rootUrl = `${window.location.origin}/notas-online`;
+	
 	// Make an AJAX request to the servlet endpoint
-	fetch('Teacher/Subject')
+	fetch(`${rootUrl}/API/Teacher/Subjects`)
 		.then(response => response.json()) // Parse the response as JSON
 		.then(subjects => {
 			const subjectListElement = document.getElementById('subject-list');
@@ -77,4 +79,4 @@ function fetchSubjects() {
 		});
 }
 
-window.onload = fetchSubjects;
+fetchSubjects();

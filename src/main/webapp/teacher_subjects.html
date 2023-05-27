@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Notas OnLine - Home</title>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<!-- Custom CSS -->
+<link rel="stylesheet" href="../css/style.css">
+<link rel="shortcut icon" href="#" />
+</head>
+
+<body>
+
+	<div class="container">
+		<div class="row mt-3">
+			<div class="col-md-12">
+				<div class="float-left mt-2">
+					<p id="placeholder-text" class="text-muted">You are logged in
+						as <span id="contact-name">[full name]</span></p>
+				</div>
+				<button class="btn btn-primary float-right mt-2" id="logout-button">Logout</button>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-md-4">
+				<div class="card">
+					<div class="card-header">
+						<h4 class="text-center">My subjects</h4>
+					</div>
+					<div class="card-body">
+						<div class="col" id="subject-list">
+							<!-- Subject list will be generated here dynamically -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-8">
+				<ul class="nav nav-tabs" id="subject-tabs">
+					<!-- Subject tabs will be generated here dynamically -->
+				</ul>
+				<div class="tab-content" id="subject-content">
+					<!-- Subject content will be displayed here dynamically -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+	<!-- Custom JavaScript -->
+	<script src="../js/teacher/teacher_subjects.js"></script>
+	<script src="../js/user_details.js"></script>
+	<script>
+		$(document).ready(function() {
+			// Logout button click event handler
+			$("#logout-button").click(function() {
+				window.location.href = "Logout";
+			});
+		});
+	</script>
+</body>
+
+</html>
