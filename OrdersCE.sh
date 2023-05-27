@@ -57,7 +57,7 @@ curl -s --data '{  "acronimo": "EDA",  "creditos": 6,  "cuatrimestre": "Segundo"
 echo -e "\n\n****** Consultamos las asignaturas y aparecerá EDA ******\n"
 curl -X GET 'http://localhost:9090/CentroEducativo/asignaturas?key='$KEY2 -H  "accept: application/json" -c cucu -b cucu
 
-#Añadimos un profesor de esa asignatura, como hay que ser administrador usamos la variable KEY1 que guarda la sesion
+#Añadimos un profesor de esa asignatura, como hay que ser administrador usamos la variable KEY2 que guarda la sesion
 
 echo -e "\n****** Añadimos un profesor (Juan Gonzalez Garcia) ******\n"
 
