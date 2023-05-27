@@ -10,6 +10,7 @@ function fetchSubjects() {
 				.then(response => response.json())
 				.then(allSubjects => {
 					const subjectListElement = document.getElementById('subject-list');
+					
 					const subjectTabsElement = document.getElementById('subject-tabs');
 					const subjectContentElement = document.getElementById('subject-content');
 
@@ -45,6 +46,10 @@ function fetchSubjects() {
 							subjectContentElement.appendChild(tabContent);
 						}
 					});
+					
+					
+					
+					
 
 					// Add click event listeners to the subject links
 					const subjectLinks = document.querySelectorAll('.subject-link');
