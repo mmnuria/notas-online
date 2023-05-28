@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	getSubjectsData();
+	getActualDate();
+
+});
+
+function getSubjectsData() {
 	// Get the subjects data from the URL parameters
 	const urlParams = new URLSearchParams(window.location.search);
 	const subjectsParam = urlParams.get('subjects');
@@ -15,7 +21,9 @@ $(document).ready(function() {
 	        `;
 		reportContent.appendChild(row);
 	});
+}
 
+function getActualDate() {
 	// Add the date
 	var date = new Date();
 	var day = date.getDate();
@@ -23,4 +31,4 @@ $(document).ready(function() {
 	var year = date.getFullYear();
 	var formattedDate = day + '/' + month + '/' + year;
 	document.getElementById('date').innerText = formattedDate;
-});
+}

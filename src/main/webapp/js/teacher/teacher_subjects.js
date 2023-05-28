@@ -1,3 +1,7 @@
+$(document).ready(function() {
+	fetchSubjects();
+});
+
 function fetchSubjects() {
 	rootUrl = `${window.location.origin}/notas-online`;
 	
@@ -78,5 +82,3 @@ function fetchSubjects() {
 			console.error('Error fetching subjects:', error);
 		});
 }
-
-fetchSubjects();

@@ -1,4 +1,9 @@
 $(document).ready(function() {
+	fetchSubjects();
+	sendReport();
+});
+
+function fetchSubjects() {
 	const rootUrl = `${window.location.origin}/notas-online`;
 
 	// Make an AJAX request to the servlet endpoint
@@ -26,16 +31,16 @@ $(document).ready(function() {
 						if (matchedSubject) {
 							const subjectCard = document.createElement('div');
 							subjectCard.innerHTML = `
-                <a href="#subject-${subject.asignatura}" class="subject-link" data-toggle="tab" data-subject="${subject.asignatura}">${matchedSubject.nombre}</a>
-              `;
+                				<a href="#subject-${subject.asignatura}" class="subject-link" data-toggle="tab" data-subject="${subject.asignatura}">${matchedSubject.nombre}</a>
+              				`;
 							subjectListElement.appendChild(subjectCard);
 
 							// Create the tab for the subject
 							const tabLink = document.createElement('li');
 							tabLink.classList.add('nav-item');
 							tabLink.innerHTML = `
-                <a class="nav-link" id="${subject.asignatura}-tab" data-toggle="tab" href="#subject-${subject.asignatura}">${subject.asignatura}</a>
-              `;
+                				<a class="nav-link" id="${subject.asignatura}-tab" data-toggle="tab" href="#subject-${subject.asignatura}">${subject.asignatura}</a>
+              				`;
 							subjectTabsElement.appendChild(tabLink);
 
 							// Create the content for the subject tab
@@ -94,8 +99,10 @@ $(document).ready(function() {
 		.catch(error => {
 			console.error('Error fetching subjects:', error);
 		});
-		
-		$(document).on('click', '#show-report-button', function() {
+}
+
+function sendReport() {
+	$(document).on('click', '#show-report-button', function() {
 		const subjects = [];
 
 		// Iterate over the subject tabs and gather information
@@ -117,4 +124,4 @@ $(document).ready(function() {
 		// Send the GET request to the servlet using window.location.href
 		window.location.href = url;
 	});
-});
+}

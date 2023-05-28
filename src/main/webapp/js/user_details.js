@@ -1,3 +1,7 @@
+$(document).ready(function() {
+	fetchUserDetails();
+});
+
 function fetchUserDetails() {
 	rootUrl = `${window.location.origin}/notas-online`;
 
@@ -20,5 +24,3 @@ function fetchUserDetails() {
 			console.error('Error fetching user details:', error);
 		});
 }
-
-fetchUserDetails();
