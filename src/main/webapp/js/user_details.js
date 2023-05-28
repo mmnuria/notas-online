@@ -7,11 +7,11 @@ function fetchContactDetails() {
 		.then(contact => {
 			const contactNameElement = document.getElementById('contact-name');
 			contactNameElement.innerHTML = `${contact.nombre} ${contact.apellidos}`;
-		})
-		.then(contact => {
+			
 			const contactDniElement = document.getElementById('contact-dni');
 			contactDniElement.innerHTML = `${contact.dni}`;
 		})
+		
 		.catch(error => {
 			console.error('Error fetching contact details:', error);
 		});
