@@ -3,7 +3,6 @@ package filter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -23,59 +22,58 @@ import helper.FileSystem;
 @WebServlet("/Log2")
 public class Log2 extends HttpServlet {
 
-    private static final String LOG_FILE_PATH_PARAM = "log-file-path";
+	private static final long serialVersionUID = 1L;
 
-    private PrintWriter logWriter;
-    private String logFilePath;
-    private FileSystem fileSystem = new FileSystem();
+	private static final String LOG_FILE_PATH_PARAM = "log-file-path";
 
-    public void init(ServletConfig servletConfig) throws ServletException {
-        // Initialization code goes here
+	private PrintWriter logWriter;
+	private String logFilePath;
+	private FileSystem fileSystem = new FileSystem();
 
-        // Get log file path from web.xml configuration
-        logFilePath = servletConfig.getServletContext().getInitParameter(LOG_FILE_PATH_PARAM);
-        Path path = Paths.get(logFilePath);
-        String routeDirectory = path.getParent().toString();
-        String nameFile = path.getFileName().toString();
+	public void init(ServletConfig servletConfig) throws ServletException {
+		// Initialization code goes here
 
-        // Open log file for writing
-        try {
-            if (!fileSystem.exists(routeDirectory)) {
-                fileSystem.createDirectory(routeDirectory);
-            }
-            fileSystem.createFile(routeDirectory, nameFile);
-            logWriter = new PrintWriter(new FileWriter(logFilePath, true));
-        } catch (IOException e) {
-            throw new ServletException("Error opening log file", e);
-        } catch (Exception e) {
-            throw new ServletException("Error creating directory", e);
-        }
-    }
+		// Get log file path from web.xml configuration
+		logFilePath = servletConfig.getServletContext().getInitParameter(LOG_FILE_PATH_PARAM);
+		Path path = Paths.get(logFilePath);
+		String routeDirectory = path.getParent().toString();
+		String nameFile = path.getFileName().toString();
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+		// Open log file for writing
+		try {
+			if (!fileSystem.exists(routeDirectory)) {
+				fileSystem.createDirectory(routeDirectory);
+			}
+			fileSystem.createFile(routeDirectory, nameFile);
+			logWriter = new PrintWriter(new FileWriter(logFilePath, true));
+		} catch (IOException e) {
+			throw new ServletException("Error opening log file", e);
+		} catch (Exception e) {
+			throw new ServletException("Error creating directory", e);
+		}
+	}
 
-        // Get relevant information
-        String formData = request.getQueryString();
-        String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
-        String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String servletName = request.getServletPath();
-        String uri = request.getRequestURI();
-        String method = request.getMethod();
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // Log the entry
-        String logEntry = currentDate + " " + clientInfo + " " + servletName + " " + method;
-        System.out.println(logEntry);
-        logWriter.println(logEntry);
-        logWriter.flush();
-    }
+		// Get relevant information
+		String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
+		String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		String servletName = request.getServletPath();
+		String method = request.getMethod();
 
-    public void destroy() {
-        // Cleanup code goes here
+		// Log the entry
+		String logEntry = currentDate + " " + clientInfo + " " + servletName + " " + method;
+		System.out.println(logEntry);
+		logWriter.println(logEntry);
+		logWriter.flush();
+	}
 
-        // Close log file
-        if (logWriter != null) {
-            logWriter.close();
-        }
-    }
+	public void destroy() {
+		// Cleanup code goes here
+
+		// Close log file
+		if (logWriter != null) {
+			logWriter.close();
+		}
+	}
 }

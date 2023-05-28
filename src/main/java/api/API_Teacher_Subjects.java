@@ -15,28 +15,25 @@ import javax.servlet.http.HttpSession;
 
 import config.DatabaseConfig;
 
-
 @WebServlet("/API/Teacher/Subjects")
 public class API_Teacher_Subjects extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
-		if(request.isUserInRole("rolpro")) 
-		{
+			throws ServletException, IOException {
+		if (request.isUserInRole("rolpro")) {
 			HttpSession session = request.getSession();
 			String dni = (String) session.getAttribute("dni");
 			String key = (String) session.getAttribute("key");
 			String cookie = (String) session.getAttribute("cookie");
-			
+
 			try {
 				String url = null;
 				// Prepare the request parameters
 				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/profesores/" + dni + "/asignaturas?key=" + key;
-				
-				//String cookie = response.getHeader("Set-Cookie");
-				
+
+				// String cookie = response.getHeader("Set-Cookie");
+
 				// Make the curl request
 				URL urlObj = new URL(url);
 				HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
@@ -70,9 +67,7 @@ public class API_Teacher_Subjects extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Error establishing connection to database");
 			}
-		}
-		else 
-		{
+		} else {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Action unauthorized.");
 		}
 	}

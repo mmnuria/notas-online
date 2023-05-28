@@ -24,7 +24,9 @@ public class API_User_Details extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		HttpSession session = request.getSession();
+
 		if (session.getAttribute("dni") != null) {
 			String dni = (String) session.getAttribute("dni");
 			String key = (String) session.getAttribute("key");

@@ -15,23 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/Log0")
 public class Log0 extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+	private static final long serialVersionUID = 1L;
 
-        // Get relevant information
-        String formData = request.getQueryString();
-        String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
-        String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
-        String servletName = request.getServletPath();
-        String uri = request.getRequestURI();
-        String method = request.getMethod();
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        // Log the entry
-        System.out.println(currentDate + " " + clientInfo + " " + servletName + " " + method);
-    }
+		// Get relevant information
+		String clientInfo = request.getRemoteUser() + " " + request.getRemoteAddr();
+		String currentDate = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		String servletName = request.getServletPath();
+		String method = request.getMethod();
 
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
+		// Log the entry
+		System.out.println(currentDate + " " + clientInfo + " " + servletName + " " + method);
+	}
+
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
+	}
 }

@@ -22,7 +22,6 @@ public class API_Subjects extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String dni = (String) session.getAttribute("dni");
 		String key = (String) session.getAttribute("key");
 		String cookie = (String) session.getAttribute("cookie");
 
