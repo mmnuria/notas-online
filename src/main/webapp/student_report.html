@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Notas OnLine - Report</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<link rel="shortcut icon" href="#" />
+</head>
+
+<body>
+	<div class="container">
+		<div class="row text-center bg-primary text-white mb-5">
+			<h1 class="display-4">DEW - CentroEducativo</h1>
+		</div>
+		<div class="text-center display-3 mb-5">Certificado sin validez
+			académica</div>
+		<div class="row mb-5">
+			<div class="col-md-8">
+				<strong>DEW - Centro Educativo</strong> certifica que <strong><span
+					id="contact-name">[full name]</span></strong> con DNI <span id="contact-dni">[full
+					dni]</span> matriculado/a en el curso 2022/23, ha obtenido las
+				calificaciones que se muestran en la siguiente tabla.
+			</div>
+			<div class="col-md-4">
+				<img src="https://via.placeholder.com/300" alt="Placeholder Image"
+					width="300px">
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-12">
+				<table class="table">
+					<thead class="bg-primary text-white">
+						<tr>
+							<th scope="col">Acrónimo</th>
+							<th scope="col">Asignatura</th>
+							<th scope="col">Calificación</th>
+						</tr>
+					</thead>
+					<tbody id="report-content">
+						<!-- The report will be generated here -->
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="text-right">
+			En Valencia, a <span id="date"></span>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="../js/user_details.js"></script>
+	<script src="../js/student/student_report.js"></script>
+</body>
+
+</html>
