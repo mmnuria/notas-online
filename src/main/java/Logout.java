@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/Logout")
-public class LogoutServlet extends HttpServlet {
+public class Logout extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,6 @@ public class LogoutServlet extends HttpServlet {
 		// Clear cookie
 		response.setHeader("Set-Cookie", "JSESSIONID=; Max-Age=0; Path=/");
 
-		// Trigger basic authentication
 		// Trigger basic authentication
         response.setHeader("WWW-Authenticate", "Basic realm=\"Protected\"");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

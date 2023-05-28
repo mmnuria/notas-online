@@ -21,31 +21,26 @@ import config.DatabaseConfig;
 @WebServlet("/API/User-Details")
 public class API_User_Details extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
+			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		if(session.getAttribute("dni") != null) 
-		{
+		if (session.getAttribute("dni") != null) {
 			String dni = (String) session.getAttribute("dni");
 			String key = (String) session.getAttribute("key");
 			String cookie = (String) session.getAttribute("cookie");
-			
+
 			try {
 				String url = null;
 				// Prepare the request parameters
 				String type = "";
-				if(request.isUserInRole("rolalu"))
-				{
+				if (request.isUserInRole("rolalu")) {
 					type = "alumnos";
-				}
-				else if(request.isUserInRole("rolpro")) 
-				{
+				} else if (request.isUserInRole("rolpro")) {
 					type = "profesores";
 				}
 				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/" + type + "/" + dni + "?key=" + key;
-				
+
 				// Make the curl request
 				URL urlObj = new URL(url);
 				HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
@@ -79,9 +74,7 @@ public class API_User_Details extends HttpServlet {
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
 						"Error establishing connection to database");
 			}
-		}
-		else 
-		{
+		} else {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Action unauthorized.");
 		}
 	}
