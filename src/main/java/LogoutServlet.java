@@ -25,6 +25,6 @@ public class LogoutServlet extends HttpServlet {
         response.getWriter().println("You have been logged out.");
 
 		// Redirect to welcome page
-		response.sendRedirect(request.getContextPath() + "/welcome.html");
+		response.sendRedirect(request.getContextPath() + "/Welcome");
 	}
 }
