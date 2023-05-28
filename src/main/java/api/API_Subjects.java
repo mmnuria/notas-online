@@ -1,3 +1,4 @@
+package api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import config.DatabaseConfig;
 
 @WebServlet("/API/Subjects")
-public class Subjects extends HttpServlet {
+public class API_Subjects extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
