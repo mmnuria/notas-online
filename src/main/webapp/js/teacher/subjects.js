@@ -38,6 +38,24 @@ function fetchSubjects() {
 				const tabContent = document.createElement('div');
 				tabContent.classList.add('tab-pane', 'fade');
 				tabContent.id = `subject-${subject.acronimo}`;
+				
+				fetch(`${rootUrl}/API/Subject/Students?acronimo=${subject.acronimo}`)
+					.then(response => response.json()) // Parse the response as JSON
+					.then(students => {
+						
+						const studentsListElement = document.createElement('ul');
+						
+						students.forEach(student => {
+							const studentElement = document.createElement('li');
+							studentElement.id = `student-${student.alumno}`;
+							studentElement.innerHTML = student.alumno;
+							studentsListElement.appendChild(studentElement);
+							
+						});
+						
+						tabContent.appendChild(studentsListElement);
+					});
+					
 				subjectContentElement.appendChild(tabContent);
 			});
 
