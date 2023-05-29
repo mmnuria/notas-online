@@ -10,8 +10,58 @@ function fetchSubjects() {
 	fetch(`${rootUrl}/API/Student/Subjects`)
 		.then(response => response.json()) // Parse the response as JSON
 		.then(subjects => {
-			// Call the common function with the required arguments
-			fetchSubjectsCommon(rootUrl, subjects);
+			// Fetch the list of all subjects as JSON from the new servlet call
+			fetch(`${rootUrl}/API/Subjects`)
+				.then(response => response.json())
+				.then(allSubjects => {
+					const subjectListElement = document.getElementById('subject-list');
+					const subjectTabsElement = document.getElementById('subject-tabs');
+					const subjectContentElement = document.getElementById('subject-content');
+
+					// Clear any existing subjects and tabs
+					subjectListElement.innerHTML = '';
+					subjectTabsElement.innerHTML = '';
+					subjectContentElement.innerHTML = '';
+
+					// Iterate over the subjects and create a card for each subject
+					subjects.forEach(subject => {
+						// Find the subject with matching acronimo
+						const matchedSubject = allSubjects.find(item => item.acronimo === subject.asignatura);
+
+						if (matchedSubject) {
+							const subjectCard = document.createElement('div');
+							subjectCard.innerHTML = `
+                				<a href="#subject-${subject.asignatura}" class="subject-link" data-toggle="tab" data-subject="${subject.asignatura}">${matchedSubject.nombre}</a>
+              				`;
+							subjectListElement.appendChild(subjectCard);
+
+							// Create the tab for the subject
+							const tabLink = document.createElement('li');
+							tabLink.classList.add('nav-item');
+							tabLink.innerHTML = `
+                				<a class="nav-link" id="${subject.asignatura}-tab" data-toggle="tab" href="#subject-${subject.asignatura}">${subject.asignatura}</a>
+              				`;
+							subjectTabsElement.appendChild(tabLink);
+
+							// Create the content for the subject tab
+							const tabContent = document.createElement('div');
+							tabContent.classList.add('tab-pane', 'fade');
+							tabContent.id = `subject-${subject.asignatura}`;
+
+							// Retrieve and display the grade
+							const gradeElement = document.createElement('p');
+							gradeElement.innerText = `Nota: ${subject.nota}`;
+							tabContent.appendChild(gradeElement);
+
+							subjectContentElement.appendChild(tabContent);
+						}
+					});
+
+					displayTabElements();
+				})
+				.catch(error => {
+					console.error('Error fetching all subjects:', error);
+				});
 		})
 		.catch(error => {
 			console.error('Error fetching subjects:', error);
