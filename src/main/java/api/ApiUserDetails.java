@@ -18,8 +18,8 @@ import config.DatabaseConfig;
 /**
  * Servlet implementation class API_Person_details
  */
-@WebServlet("/API/User-Details")
-public class API_User_Details extends HttpServlet {
+@WebServlet("/API/UserDetails")
+public class ApiUserDetails extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

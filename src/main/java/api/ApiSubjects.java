@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import config.DatabaseConfig;
 
 @WebServlet("/API/Subjects")
-public class API_Subjects extends HttpServlet {
+public class ApiSubjects extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

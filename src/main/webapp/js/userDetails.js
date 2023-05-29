@@ -6,7 +6,7 @@ function fetchUserDetails() {
 	rootUrl = `${window.location.origin}/notas-online`;
 
 	// Make an AJAX request to the servlet endpoint
-	fetch(`${rootUrl}/API/User-Details`)
+	fetch(`${rootUrl}/API/UserDetails`)
 		.then(response => response.json()) // Parse the response as JSON
 		.then(user => {
 			const userNameElement = document.getElementById('user-name');

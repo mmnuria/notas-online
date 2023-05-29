@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/Student/Report")
-public class Student_Report extends HttpServlet {
+@WebServlet("/Student/Certification")
+public class Certification extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -18,7 +18,7 @@ public class Student_Report extends HttpServlet {
 			throws ServletException, IOException {
 
 		if (request.isUserInRole("rolalu")) {
-			RequestDispatcher rd = request.getRequestDispatcher("../student_report.html");
+			RequestDispatcher rd = request.getRequestDispatcher("../certification.html");
 			rd.include(request, response);
 		} else {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Action unauthorized.");

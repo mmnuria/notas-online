@@ -11,7 +11,7 @@ function getSubjectsData() {
 	const subjects = JSON.parse(subjectsParam);
 
 	// Populate the table with subjects
-	const reportContent = document.getElementById('report-content');
+	const reportContent = document.getElementById('certificate-content');
 	subjects.forEach(subject => {
 		const row = document.createElement('tr');
 		row.innerHTML = `

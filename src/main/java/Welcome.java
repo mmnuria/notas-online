@@ -17,7 +17,7 @@ public class Welcome extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("welcome.html");
+		RequestDispatcher rd = request.getRequestDispatcher("welcome_page.html");
         rd.include(request, response);
 	}
 

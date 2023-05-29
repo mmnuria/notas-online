@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Teacher
  */
 @WebServlet("/Teacher/Subjects")
-public class Teacher_Subjects extends HttpServlet {
+public class TeacherSubjects extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -21,7 +21,7 @@ public class Teacher_Subjects extends HttpServlet {
 	{
 		if(request.isUserInRole("rolpro")) 
 		{
-			RequestDispatcher rd = request.getRequestDispatcher("../teacher_subjects.html");
+			RequestDispatcher rd = request.getRequestDispatcher("../teacher_page.html");
 	        rd.include(request, response);
 		}
 		else 

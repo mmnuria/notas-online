@@ -15,13 +15,18 @@ import javax.servlet.http.HttpSession;
 
 import config.DatabaseConfig;
 
-@WebServlet("/API/Teacher/Subjects")
-public class API_Teacher_Subjects extends HttpServlet {
+/**
+ * Servlet implementation class API_Student_Subject
+ */
+@WebServlet("/API/Student/Subjects")
+public class ApiStudentSubjects extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.isUserInRole("rolpro")) {
+
+		if (request.isUserInRole("rolalu")) {
+
 			HttpSession session = request.getSession();
 			String dni = (String) session.getAttribute("dni");
 			String key = (String) session.getAttribute("key");
@@ -30,7 +35,7 @@ public class API_Teacher_Subjects extends HttpServlet {
 			try {
 				String url = null;
 				// Prepare the request parameters
-				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/profesores/" + dni + "/asignaturas?key=" + key;
+				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/alumnos/" + dni + "/asignaturas?key=" + key;
 
 				// String cookie = response.getHeader("Set-Cookie");
 
