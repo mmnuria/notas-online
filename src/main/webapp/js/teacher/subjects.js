@@ -90,6 +90,12 @@ async function fetchStudentsData(subject) {
 		// Grade cell
 		const gradeCell = document.createElement('td');
 		gradeCell.textContent = student.nota;
+
+		// Add a click event listener to the grade cell
+		gradeCell.addEventListener('click', () => {
+			changeGrade(studentRow);
+		});
+		
 		studentRow.appendChild(gradeCell);
 
 		tableElement.appendChild(studentRow);
