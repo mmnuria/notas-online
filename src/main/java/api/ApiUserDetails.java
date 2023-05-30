@@ -28,20 +28,15 @@ public class ApiUserDetails extends HttpServlet {
 		HttpSession session = request.getSession();
 		String dni = "";
 		String type = "alumnos";
-		
-		if(request.getParameter("dni") != null && session.getAttribute("dni") != null) 
-		{
+
+		if (request.getParameter("dni") != null && session.getAttribute("dni") != null) {
 			dni = request.getParameter("dni");
-		}
-		else if(session.getAttribute("dni") != null) 
-		{
+		} else if (session.getAttribute("dni") != null) {
 			dni = (String) session.getAttribute("dni");
 			if (request.isUserInRole("rolpro")) {
 				type = "profesores";
 			}
-		}
-		else 
-		{
+		} else {
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Action unauthorized.");
 		}
 
