@@ -26,58 +26,65 @@ public class ApiUserDetails extends HttpServlet {
 			throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-
-		if (session.getAttribute("dni") != null) {
-			String dni = (String) session.getAttribute("dni");
-			String key = (String) session.getAttribute("key");
-			String cookie = (String) session.getAttribute("cookie");
-
-			try {
-				String url = null;
-				// Prepare the request parameters
-				String type = "";
-				if (request.isUserInRole("rolalu")) {
-					type = "alumnos";
-				} else if (request.isUserInRole("rolpro")) {
-					type = "profesores";
-				}
-				url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/" + type + "/" + dni + "?key=" + key;
-
-				// Make the curl request
-				URL urlObj = new URL(url);
-				HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
-				connection.setRequestMethod("GET");
-				connection.setRequestProperty("Accept", "application/json");
-				connection.setRequestProperty("cookie", cookie);
-
-				// Get the response status code
-				int statusCode = connection.getResponseCode();
-
-				// Read the response
-				if (statusCode == HttpServletResponse.SC_OK) {
-					BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-					String line;
-					StringBuilder responseContent = new StringBuilder();
-					while ((line = reader.readLine()) != null) {
-						responseContent.append(line);
-					}
-					reader.close();
-					connection.disconnect();
-
-					response.setContentType("application/json");
-					response.getWriter().write(responseContent.toString());
-
-				} else {
-					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Data authentication failed");
-				}
-				response.setStatus(statusCode);
-			} catch (Exception e) {
-				e.printStackTrace();
-				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-						"Error establishing connection to database");
+		String dni = "";
+		String type = "alumnos";
+		
+		if(request.getParameter("dni") != null && session.getAttribute("dni") != null) 
+		{
+			dni = request.getParameter("dni");
+		}
+		else if(session.getAttribute("dni") != null) 
+		{
+			dni = (String) session.getAttribute("dni");
+			if (request.isUserInRole("rolpro")) {
+				type = "profesores";
 			}
-		} else {
+		}
+		else 
+		{
 			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Action unauthorized.");
+		}
+
+		String key = (String) session.getAttribute("key");
+		String cookie = (String) session.getAttribute("cookie");
+
+		try {
+			String url = null;
+			// Prepare the request parameters
+			url = DatabaseConfig.CENTRO_EDUCATIVO_URL + "/" + type + "/" + dni + "?key=" + key;
+
+			// Make the curl request
+			URL urlObj = new URL(url);
+			HttpURLConnection connection = (HttpURLConnection) urlObj.openConnection();
+			connection.setRequestMethod("GET");
+			connection.setRequestProperty("Accept", "application/json");
+			connection.setRequestProperty("cookie", cookie);
+
+			// Get the response status code
+			int statusCode = connection.getResponseCode();
+
+			// Read the response
+			if (statusCode == HttpServletResponse.SC_OK) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+				String line;
+				StringBuilder responseContent = new StringBuilder();
+				while ((line = reader.readLine()) != null) {
+					responseContent.append(line);
+				}
+				reader.close();
+				connection.disconnect();
+
+				response.setContentType("application/json");
+				response.getWriter().write(responseContent.toString());
+
+			} else {
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Data authentication failed");
+			}
+			response.setStatus(statusCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+					"Error establishing connection to database");
 		}
 	}
 }

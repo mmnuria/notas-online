@@ -46,11 +46,29 @@ function fetchSubjects() {
 						const studentsListElement = document.createElement('ul');
 						
 						students.forEach(student => {
-							const studentElement = document.createElement('li');
-							studentElement.id = `student-${student.alumno}`;
-							studentElement.innerHTML = student.alumno;
-							studentsListElement.appendChild(studentElement);
+							const studentLiElement = document.createElement('li');
+							studentLiElement.id = `student-${student.alumno}`;
+							studentsListElement.appendChild(studentLiElement);
 							
+							const studentDivElement = document.createElement('div');
+							
+							const nameElement = document.createElement('p');
+							fetch(`${rootUrl}/API/UserDetails?dni=${student.alumno}`)
+								.then(response => response.json()) // Parse the response as JSON
+								.then(user => {
+									nameElement.innerHTML = `${user.nombre} ${user.apellidos}`;
+								})
+								.catch(error => {
+									console.error('Error fetching student details:', error);
+								});
+							studentDivElement.appendChild(nameElement);
+							
+							// Retrieve and display the grade
+							const gradeElement = document.createElement('p');
+							gradeElement.innerText = `Grade: ${student.nota}`;
+							studentDivElement.appendChild(gradeElement);
+							
+							studentLiElement.appendChild(studentDivElement);
 						});
 						
 						tabContent.appendChild(studentsListElement);
