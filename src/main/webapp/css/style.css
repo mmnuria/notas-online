@@ -1,21 +1,22 @@
+/* styles.css */
 body {
-	background-color: #F7F7F7;
+	background-color: #f7f7f7;
 	padding: 20px;
 }
 
 .card-header {
-	background-color: #0D47A1;
-	color: #FFFFFF;
+	background-color: #0d47a1;
+	color: #fff;
 }
 
 .btn-primary {
-	background-color: #0D47A1;
-	border-color: #0D47A1;
+	background-color: #0d47a1;
+	border-color: #0d47a1;
 }
 
 .btn-primary:hover {
-	background-color: #1E88E5;
-	border-color: #1E88E5;
+	background-color: #1e88e5;
+	border-color: #1e88e5;
 }
 
 .nav-tabs .nav-link {
@@ -25,7 +26,7 @@ body {
 }
 
 .nav-tabs .nav-link:hover {
-	background-color: #F7F7F7;
+	background-color: #f7f7f7;
 }
 
 .tabla-link {
@@ -36,4 +37,48 @@ body {
 .tabla-subject {
 	color: #000;
 	font-size: 18px;
+}
+
+.table-bordered {
+	border: 1px solid #dee2e6;
+}
+
+.table td, .table th {
+	padding: 0.75rem;
+	vertical-align: top;
+	border-top: 1px solid #dee2e6;
+}
+
+.table thead th {
+	vertical-align: bottom;
+	border-bottom: 2px solid #dee2e6;
+}
+
+.table-bordered th, .table-bordered td {
+	border: 1px solid #dee2e6;
+}
+
+.table-bordered thead th, .table-bordered thead td {
+	border-bottom-width: 2px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+	background-color: #fff;
+}
+
+.table-hover tbody tr:hover {
+	background-color: rgba(0, 0, 0, 0.075);
+}
+
+.mean-row {
+	background-color: #f9f9f9;
+}
+
+.mean-cell {
+	font-weight: bold;
+	color: blue;
 }
