@@ -82,3 +82,13 @@ body {
 	font-weight: bold;
 	color: blue;
 }
+
+
+#student-cell {
+	cursor: pointer;
+	transition: background-color 0.5s ease-out 50ms
+}
+
+#student-cell:hover {
+  background-color: #DCDCDC;
+}

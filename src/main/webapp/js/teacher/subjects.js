@@ -104,7 +104,7 @@ async function fetchStudentsData(subject) {
 		            const studentDNI = user.dni;
 		            navigateToStudentDetailPage(studentDNI);
 		        });
-		        nameCell.css('cursor', 'pointer');
+		        //nameCell.css('cursor', 'pointer');
 			})
 			.catch(error => {
 				console.error('Error fetching student details:', error);
