@@ -95,15 +95,24 @@ async function fetchStudentsData(subject) {
 
 		// Student name cell
 		const nameCell = document.createElement('td');
+		nameCell.id = "student-cell";
 		fetch(`${rootUrl}/API/UserDetails?dni=${student.alumno}`)
 			.then(response_1 => response_1.json())
 			.then(user => {
 				nameCell.textContent = `${user.nombre} ${user.apellidos}`;
+				nameCell.addEventListener('click', () => {
+		            const studentDNI = user.dni;
+		            navigateToStudentDetailPage(studentDNI);
+		        });
+		        nameCell.css('cursor', 'pointer');
 			})
 			.catch(error => {
 				console.error('Error fetching student details:', error);
 			});
+			
 		studentRow.appendChild(nameCell);
+		
+		
 
 		// Grade cell
 		const gradeCell = document.createElement('td');
@@ -140,4 +149,10 @@ function calculateMean(students) {
 	const sum = grades.reduce((total, grade) => total + grade, 0);
 	const mean = sum / grades.length;
 	return mean.toFixed(2);
+}
+
+
+function navigateToStudentDetailPage(studentDNI) {
+  const studentDetailUrl = `${window.location.origin}/notas-online/Student/Details?dni=${studentDNI}`;
+  window.location.href = studentDetailUrl;
 }
