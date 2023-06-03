@@ -102,7 +102,7 @@ async function fetchStudentsData(subject) {
 				nameCell.textContent = `${user.nombre} ${user.apellidos}`;
 				nameCell.addEventListener('click', () => {
 		            const studentDNI = user.dni;
-		            navigateToStudentDetailPage(studentDNI);
+		            navigateToStudentDetailPage(studentDNI, students);
 		        });
 		        //nameCell.css('cursor', 'pointer');
 			})
@@ -112,8 +112,6 @@ async function fetchStudentsData(subject) {
 			
 		studentRow.appendChild(nameCell);
 		
-		
-
 		// Grade cell
 		const gradeCell = document.createElement('td');
 		gradeCell.classList.add('grade-cell');
@@ -152,7 +150,7 @@ function calculateMean(students) {
 }
 
 
-function navigateToStudentDetailPage(studentDNI) {
-  const studentDetailUrl = `${window.location.origin}/notas-online/Student/Details?dni=${studentDNI}`;
+function navigateToStudentDetailPage(studentDNI, students) {
+  const studentDetailUrl = `${window.location.origin}/notas-online/Student/Details?dni=${studentDNI}&students=${encodeURIComponent(JSON.stringify(students))}`;
   window.location.href = studentDetailUrl;
 }
