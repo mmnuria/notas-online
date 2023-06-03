@@ -15,19 +15,39 @@
 		<div class="row text-center bg-primary text-white mb-5">
 			<h1 class="display-3">DEW - CentroEducativo</h1>
 		</div>
-		<div class="text-left display-4 mb-5"><span
-					id="student-name">[full name]</span> 
-					(<span id="student-dni">[dni]</span>)
+		<div class="text-left display-4 mb-5">
+			<span id="user-name">[full name]</span> (<span id="user-dni">[dni]</span>)
 		</div>
 		<div class="row mb-5">
-		<div class="col-md-4">
-				<img src="https://via.placeholder.com/300" alt="Placeholder Image"
-					width="300px">
+			<div class="col-md-4">
+				<img id="student-image" src="https://via.placeholder.com/300"
+					alt="Student Image" width="300px">
 			</div>
 			<div class="col-md-8">
-				<p>Matriculad@ en: <span id="subjects"> </span></p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc viverra sagittis tristique. In bibendum lorem ac pulvinar volutpat. Suspendisse elit ligula, elementum eget maximus vel, cursus sed velit. Ut tincidunt, lacus eget sollicitudin aliquet, dui magna tincidunt augue, a porttitor quam sem nec nibh. Praesent sollicitudin suscipit ex a accumsan. Nam id mattis magna, id laoreet sem. Nullam molestie est quis eros congue euismod. Pellentesque quis metus congue ex laoreet mattis in non dui. Quisque vel quam elit. Suspendisse ultricies egestas scelerisque. Nam id vestibulum nisi. Nunc consectetur finibus quam vitae convallis. Morbi lacinia, odio id cursus sollicitudin, erat mauris malesuada leo, vel feugiat mauris ante sed ligula. Suspendisse dignissim lectus id suscipit fermentum. Proin fringilla egestas diam vel mattis.</p>
-				</div>
+				<p>
+					Matriculad@ en: <span id="subjects"> </span>
+				</p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
+					viverra sagittis tristique. In bibendum lorem ac pulvinar volutpat.
+					Suspendisse elit ligula, elementum eget maximus vel, cursus sed
+					velit. Ut tincidunt, lacus eget sollicitudin aliquet, dui magna
+					tincidunt augue, a porttitor quam sem nec nibh. Praesent
+					sollicitudin suscipit ex a accumsan. Nam id mattis magna, id
+					laoreet sem. Nullam molestie est quis eros congue euismod.
+					Pellentesque quis metus congue ex laoreet mattis in non dui.
+					Quisque vel quam elit. Suspendisse ultricies egestas scelerisque.
+					Nam id vestibulum nisi. Nunc consectetur finibus quam vitae
+					convallis. Morbi lacinia, odio id cursus sollicitudin, erat mauris
+					malesuada leo, vel feugiat mauris ante sed ligula. Suspendisse
+					dignissim lectus id suscipit fermentum. Proin fringilla egestas
+					diam vel mattis.</p>
+			</div>
+		</div>
+		<div class="row mb-5">
+			<div class="col-md-12 text-center">
+				<button id="previous-button" class="btn btn-secondary mr-2" disabled>Previous</button>
+				<button id="next-button" class="btn btn-secondary">Next</button>
+			</div>
 		</div>
 	</div>
 
@@ -36,7 +56,9 @@
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="../js/userDetails.js"></script>
 	<script src="../js/student/details.js"></script>
+	<script src="../js/student/image.js"></script>
 </body>
 
 </html>
