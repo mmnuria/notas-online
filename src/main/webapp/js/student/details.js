@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	fetchStudentSubjects();
+	goToPreviousOrNextStudent();
 });
 
 function fetchStudentSubjects() {
@@ -35,4 +36,35 @@ function fetchStudentSubjects() {
 		.catch(error => {
 			console.error('Error fetching subjects:', error);
 		});
+}
+
+function goToPreviousOrNextStudent() {
+	// Retrieve the student DNI from the query parameter
+	const urlParams = new URLSearchParams(window.location.search);
+	const dni = urlParams.get('dni');
+
+	const studentsParam = urlParams.get('students');
+	students = JSON.parse(decodeURIComponent(studentsParam));
+
+	// Retrieve the previous and next buttons
+	const previousButton = document.getElementById('previous-button');
+	const nextButton = document.getElementById('next-button');
+
+	// Find the index of the current student in the currentStudents array
+	const currentIndex = students.findIndex(student => student.alumno === dni);
+
+	// Enable or disable the Previous and Next buttons based on the current student's index
+	previousButton.disabled = currentIndex === 0;
+	nextButton.disabled = currentIndex === students.length - 1;
+
+	// Add click event listeners to the Previous and Next buttons
+	previousButton.addEventListener('click', () => {
+		const previousStudentDetailUrl = `${window.location.origin}/notas-online/Student/Details?dni=${students[currentIndex - 1].alumno}&students=${encodeURIComponent(JSON.stringify(students))}`;
+		window.location.href = previousStudentDetailUrl;
+	});
+
+	nextButton.addEventListener('click', () => {
+		const nextStudentDetailUrl = `${window.location.origin}/notas-online/Student/Details?dni=${students[currentIndex + 1].alumno}&students=${encodeURIComponent(JSON.stringify(students))}`;
+		window.location.href = nextStudentDetailUrl;
+	});
 }
