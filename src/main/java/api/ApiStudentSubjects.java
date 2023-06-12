@@ -71,6 +71,7 @@ public class ApiStudentSubjects extends HttpServlet {
 				connection.disconnect();
 
 				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
 				response.getWriter().write(responseContent.toString());
 
 			} else {
