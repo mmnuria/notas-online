@@ -31,16 +31,16 @@ function fetchSubjects() {
 						if (matchedSubject) {
 							const subjectCard = document.createElement('div');
 							subjectCard.innerHTML = `
-                				<a href="#subject-${subject.asignatura}" class="subject-link" data-toggle="tab" data-subject="${subject.asignatura}">${matchedSubject.nombre}</a>
-              				`;
+                                <a href="#subject-${subject.asignatura}" class="subject-link" data-toggle="tab" data-subject="${subject.asignatura}">${matchedSubject.nombre}</a>
+                            `;
 							subjectListElement.appendChild(subjectCard);
 
 							// Create the tab for the subject
 							const tabLink = document.createElement('li');
 							tabLink.classList.add('nav-item');
 							tabLink.innerHTML = `
-                				<a class="nav-link" id="${subject.asignatura}-tab" data-toggle="tab" href="#subject-${subject.asignatura}">${subject.asignatura}</a>
-              				`;
+                                <a class="nav-link" id="${subject.asignatura}-tab" data-toggle="tab" href="#subject-${subject.asignatura}">${subject.asignatura}</a>
+                            `;
 							subjectTabsElement.appendChild(tabLink);
 
 							// Create the content for the subject tab
@@ -50,8 +50,13 @@ function fetchSubjects() {
 
 							// Retrieve and display the grade
 							const gradeElement = document.createElement('p');
-							gradeElement.innerText = `Nota: ${subject.nota}`;
+							gradeElement.innerHTML = `Nota: ${subject.nota}`;
 							tabContent.appendChild(gradeElement);
+
+							const detailsLink = document.createElement('a');
+							detailsLink.href = `../Subject/Details?subject=${subject.asignatura}`;
+							detailsLink.innerText = 'Details';
+							tabContent.appendChild(detailsLink);
 
 							subjectContentElement.appendChild(tabContent);
 						}
